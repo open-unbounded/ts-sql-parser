@@ -9,13 +9,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createParser(sql string) (*parser.SqlParser, *parseTreeVisitor, *VerboseListener) {
+func createParser(sql string) (*parser.TsSqlParser, *parseTreeVisitor, *VerboseListener) {
 	inputStream := antlr.NewInputStream(sql)
-	lexer := parser.NewSqlLexer(inputStream)
+	lexer := parser.NewTsSqlLexer(inputStream)
 	lexer.RemoveErrorListeners()
 
 	tokens := antlr.NewCommonTokenStream(lexer, antlr.LexerDefaultTokenChannel)
-	tsSqlParser := parser.NewSqlParser(tokens)
+	tsSqlParser := parser.NewTsSqlParser(tokens)
 	tsSqlParser.RemoveErrorListeners()
 	listener := &VerboseListener{}
 	tsSqlParser.AddErrorListener(listener)

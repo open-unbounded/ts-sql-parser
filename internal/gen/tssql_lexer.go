@@ -15,14 +15,14 @@ var _ = fmt.Printf
 var _ = sync.Once{}
 var _ = unicode.IsLetter
 
-type SqlLexer struct {
+type TsSqlLexer struct {
 	*antlr.BaseLexer
 	channelNames []string
 	modeNames    []string
 	// TODO: EOF string
 }
 
-var sqllexerLexerStaticData struct {
+var tssqllexerLexerStaticData struct {
 	once                   sync.Once
 	serializedATN          []int32
 	channelNames           []string
@@ -35,8 +35,8 @@ var sqllexerLexerStaticData struct {
 	decisionToDFA          []*antlr.DFA
 }
 
-func sqllexerLexerInit() {
-	staticData := &sqllexerLexerStaticData
+func tssqllexerLexerInit() {
+	staticData := &tssqllexerLexerStaticData
 	staticData.channelNames = []string{
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN", "SQLCOMMENT", "ERRORCHANNEL",
 	}
@@ -318,101 +318,101 @@ func sqllexerLexerInit() {
 	}
 }
 
-// SqlLexerInit initializes any static state used to implement SqlLexer. By default the
+// TsSqlLexerInit initializes any static state used to implement TsSqlLexer. By default the
 // static state used to implement the lexer is lazily initialized during the first call to
-// NewSqlLexer(). You can call this function if you wish to initialize the static state ahead
+// NewTsSqlLexer(). You can call this function if you wish to initialize the static state ahead
 // of time.
-func SqlLexerInit() {
-	staticData := &sqllexerLexerStaticData
-	staticData.once.Do(sqllexerLexerInit)
+func TsSqlLexerInit() {
+	staticData := &tssqllexerLexerStaticData
+	staticData.once.Do(tssqllexerLexerInit)
 }
 
-// NewSqlLexer produces a new lexer instance for the optional input antlr.CharStream.
-func NewSqlLexer(input antlr.CharStream) *SqlLexer {
-	SqlLexerInit()
-	l := new(SqlLexer)
+// NewTsSqlLexer produces a new lexer instance for the optional input antlr.CharStream.
+func NewTsSqlLexer(input antlr.CharStream) *TsSqlLexer {
+	TsSqlLexerInit()
+	l := new(TsSqlLexer)
 	l.BaseLexer = antlr.NewBaseLexer(input)
-	staticData := &sqllexerLexerStaticData
+	staticData := &tssqllexerLexerStaticData
 	l.Interpreter = antlr.NewLexerATNSimulator(l, staticData.atn, staticData.decisionToDFA, staticData.predictionContextCache)
 	l.channelNames = staticData.channelNames
 	l.modeNames = staticData.modeNames
 	l.RuleNames = staticData.ruleNames
 	l.LiteralNames = staticData.literalNames
 	l.SymbolicNames = staticData.symbolicNames
-	l.GrammarFileName = "SqlLexer.g4"
+	l.GrammarFileName = "TsSqlLexer.g4"
 	// TODO: l.EOF = antlr.TokenEOF
 
 	return l
 }
 
-// SqlLexer tokens.
+// TsSqlLexer tokens.
 const (
-	SqlLexerSPACE              = 1
-	SqlLexerSPEC_MYSQL_COMMENT = 2
-	SqlLexerCOMMENT_INPUT      = 3
-	SqlLexerLINE_COMMENT       = 4
-	SqlLexerDOT_PROPERTY       = 5
-	SqlLexerDOT_SERVICE        = 6
-	SqlLexerDOT_EVENT          = 7
-	SqlLexerFALSE              = 8
-	SqlLexerTRUE               = 9
-	SqlLexerSELECT             = 10
-	SqlLexerFROM               = 11
-	SqlLexerWHERE              = 12
-	SqlLexerINTERVAL           = 13
-	SqlLexerAND                = 14
-	SqlLexerIN                 = 15
-	SqlLexerIS                 = 16
-	SqlLexerOR                 = 17
-	SqlLexerAS                 = 18
-	SqlLexerXOR                = 19
-	SqlLexerJOIN               = 20
-	SqlLexerLEFT               = 21
-	SqlLexerLIKE               = 22
-	SqlLexerLIMIT              = 23
-	SqlLexerNOT                = 24
-	SqlLexerSTAR               = 25
-	SqlLexerDIVIDE             = 26
-	SqlLexerMODULE             = 27
-	SqlLexerPLUS               = 28
-	SqlLexerMINUS              = 29
-	SqlLexerDIV                = 30
-	SqlLexerMOD                = 31
-	SqlLexerEQUAL_SYMBOL       = 32
-	SqlLexerGREATER_SYMBOL     = 33
-	SqlLexerLESS_SYMBOL        = 34
-	SqlLexerEXCLAMATION_SYMBOL = 35
-	SqlLexerBIT_NOT_OP         = 36
-	SqlLexerBIT_OR_OP          = 37
-	SqlLexerBIT_AND_OP         = 38
-	SqlLexerBIT_XOR_OP         = 39
-	SqlLexerTIME_INTERVAL      = 40
-	SqlLexerDOT                = 41
-	SqlLexerLR_BRACKET         = 42
-	SqlLexerRR_BRACKET         = 43
-	SqlLexerCOMMA              = 44
-	SqlLexerSEMI               = 45
-	SqlLexerAT_SIGN            = 46
-	SqlLexerZERO_DECIMAL       = 47
-	SqlLexerONE_DECIMAL        = 48
-	SqlLexerTWO_DECIMAL        = 49
-	SqlLexerSINGLE_QUOTE_SYMB  = 50
-	SqlLexerDOUBLE_QUOTE_SYMB  = 51
-	SqlLexerREVERSE_QUOTE_SYMB = 52
-	SqlLexerCOLON_SYMB         = 53
-	SqlLexerID                 = 54
-	SqlLexerNULL_LITERAL       = 55
-	SqlLexerNULL_SPEC_LITERAL  = 56
-	SqlLexerSTRING_LITERAL     = 57
-	SqlLexerPROPERTY           = 58
-	SqlLexerSERVICE            = 59
-	SqlLexerDECIMAL_LITERAL    = 60
-	SqlLexerREAL_LITERAL       = 61
-	SqlLexerERROR_RECONGNIGION = 62
+	TsSqlLexerSPACE              = 1
+	TsSqlLexerSPEC_MYSQL_COMMENT = 2
+	TsSqlLexerCOMMENT_INPUT      = 3
+	TsSqlLexerLINE_COMMENT       = 4
+	TsSqlLexerDOT_PROPERTY       = 5
+	TsSqlLexerDOT_SERVICE        = 6
+	TsSqlLexerDOT_EVENT          = 7
+	TsSqlLexerFALSE              = 8
+	TsSqlLexerTRUE               = 9
+	TsSqlLexerSELECT             = 10
+	TsSqlLexerFROM               = 11
+	TsSqlLexerWHERE              = 12
+	TsSqlLexerINTERVAL           = 13
+	TsSqlLexerAND                = 14
+	TsSqlLexerIN                 = 15
+	TsSqlLexerIS                 = 16
+	TsSqlLexerOR                 = 17
+	TsSqlLexerAS                 = 18
+	TsSqlLexerXOR                = 19
+	TsSqlLexerJOIN               = 20
+	TsSqlLexerLEFT               = 21
+	TsSqlLexerLIKE               = 22
+	TsSqlLexerLIMIT              = 23
+	TsSqlLexerNOT                = 24
+	TsSqlLexerSTAR               = 25
+	TsSqlLexerDIVIDE             = 26
+	TsSqlLexerMODULE             = 27
+	TsSqlLexerPLUS               = 28
+	TsSqlLexerMINUS              = 29
+	TsSqlLexerDIV                = 30
+	TsSqlLexerMOD                = 31
+	TsSqlLexerEQUAL_SYMBOL       = 32
+	TsSqlLexerGREATER_SYMBOL     = 33
+	TsSqlLexerLESS_SYMBOL        = 34
+	TsSqlLexerEXCLAMATION_SYMBOL = 35
+	TsSqlLexerBIT_NOT_OP         = 36
+	TsSqlLexerBIT_OR_OP          = 37
+	TsSqlLexerBIT_AND_OP         = 38
+	TsSqlLexerBIT_XOR_OP         = 39
+	TsSqlLexerTIME_INTERVAL      = 40
+	TsSqlLexerDOT                = 41
+	TsSqlLexerLR_BRACKET         = 42
+	TsSqlLexerRR_BRACKET         = 43
+	TsSqlLexerCOMMA              = 44
+	TsSqlLexerSEMI               = 45
+	TsSqlLexerAT_SIGN            = 46
+	TsSqlLexerZERO_DECIMAL       = 47
+	TsSqlLexerONE_DECIMAL        = 48
+	TsSqlLexerTWO_DECIMAL        = 49
+	TsSqlLexerSINGLE_QUOTE_SYMB  = 50
+	TsSqlLexerDOUBLE_QUOTE_SYMB  = 51
+	TsSqlLexerREVERSE_QUOTE_SYMB = 52
+	TsSqlLexerCOLON_SYMB         = 53
+	TsSqlLexerID                 = 54
+	TsSqlLexerNULL_LITERAL       = 55
+	TsSqlLexerNULL_SPEC_LITERAL  = 56
+	TsSqlLexerSTRING_LITERAL     = 57
+	TsSqlLexerPROPERTY           = 58
+	TsSqlLexerSERVICE            = 59
+	TsSqlLexerDECIMAL_LITERAL    = 60
+	TsSqlLexerREAL_LITERAL       = 61
+	TsSqlLexerERROR_RECONGNIGION = 62
 )
 
-// SqlLexer escapedChannels.
+// TsSqlLexer escapedChannels.
 const (
-	SqlLexerSQLCOMMENT   = 2
-	SqlLexerERRORCHANNEL = 3
+	TsSqlLexerSQLCOMMENT   = 2
+	TsSqlLexerERRORCHANNEL = 3
 )

@@ -1,11 +1,11 @@
 // Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
-package parser // SqlParser
+package parser // TsSqlParser
 
 import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
-// SqlParserListener is a complete listener for a parse tree produced by SqlParser.
-type SqlParserListener interface {
+// TsSqlParserListener is a complete listener for a parse tree produced by TsSqlParser.
+type TsSqlParserListener interface {
 	antlr.ParseTreeListener
 
 	// EnterRoot is called when entering the root production.

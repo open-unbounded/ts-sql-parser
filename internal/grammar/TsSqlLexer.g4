@@ -1,4 +1,4 @@
-lexer grammar SqlLexer;
+lexer grammar TsSqlLexer;
 
 options { caseInsensitive = true; }
 

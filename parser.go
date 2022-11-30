@@ -10,16 +10,16 @@ import (
 type Sql struct {
 }
 type parseTreeVisitor struct {
-	parser.BaseSqlParserVisitor
+	parser.BaseTsSqlParserVisitor
 }
 
 func Parse(sql string) interface{} {
 	inputStream := antlr.NewInputStream(sql)
-	lexer := parser.NewSqlLexer(inputStream)
+	lexer := parser.NewTsSqlLexer(inputStream)
 	lexer.RemoveErrorListeners()
 
 	tokens := antlr.NewCommonTokenStream(lexer, antlr.LexerDefaultTokenChannel)
-	mysqlParser := parser.NewSqlParser(tokens)
+	mysqlParser := parser.NewTsSqlParser(tokens)
 	visitor := &parseTreeVisitor{}
 	accept := mysqlParser.Root().Accept(visitor)
 

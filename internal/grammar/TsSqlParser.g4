@@ -1,10 +1,10 @@
-parser grammar SqlParser;
+parser grammar TsSqlParser;
 
-options { tokenVocab=SqlLexer; }
+options { tokenVocab=TsSqlLexer; }
 
 
 root
-    : (selectStmt SEMI? | emptyStatement_)* (selectStmt SEMI? | emptyStatement_)
+    : (selectStmt SEMI? | emptyStatement_) (selectStmt SEMI? | emptyStatement_)*
     ;
 selectStmt
     : SELECT selectElements fromClause limitClause? windowClause?
@@ -27,14 +27,14 @@ limitClause
     ;
 
 limitClauseAtom
-	: DECIMAL_LITERAL
-	| TWO_DECIMAL
-	| ONE_DECIMAL
-	| ZERO_DECIMAL
-	;
+    : DECIMAL_LITERAL
+    | TWO_DECIMAL
+    | ONE_DECIMAL
+    | ZERO_DECIMAL
+    ;
 
 windowClause
-    :  INTERVAL'(' TIME_INTERVAL ')'
+    : INTERVAL'(' TIME_INTERVAL ')'
     ;
 
 uid
@@ -83,14 +83,18 @@ constant
     | booleanLiteral
     | NOT? nullLiteral=(NULL_LITERAL | NULL_SPEC_LITERAL)
     ;
+
 stringLiteral
     : STRING_LITERAL
     ;
+
 decimalLiteral
     : DECIMAL_LITERAL | ZERO_DECIMAL | ONE_DECIMAL | TWO_DECIMAL | REAL_LITERAL
     ;
+
 booleanLiteral
-     : TRUE | FALSE;
+    : TRUE | FALSE;
+
 emptyStatement_
     : SEMI
     ;
