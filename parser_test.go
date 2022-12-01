@@ -51,7 +51,7 @@ func Test_parseTreeVisitor_VisitConstant(t *testing.T) {
 		sqlParser, visitor, listener := createParser("-1")
 		accept := sqlParser.Constant().Accept(visitor)
 		assert.EqualValues(t, ConstantDecimal{Val: -1}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("3", func(t *testing.T) {
@@ -161,7 +161,7 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		sqlParser, visitor, listener := createParser("LIMIT 1.22")
 		accept := sqlParser.LimitClause().Accept(visitor)
 		assert.EqualValues(t, LimitClause{Offset: 0, Limit: 0}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -173,7 +173,7 @@ func Test_parseTreeVisitor_VisitWindowClause(t *testing.T) {
 			assert.EqualValues(t, WindowClause{
 				Duration: s,
 			}, accept)
-			fmt.Printf(listener.errString.String())
+			fmt.Print(listener.errString.String())
 		}
 	})
 }
