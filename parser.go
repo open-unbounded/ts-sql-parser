@@ -2,6 +2,7 @@ package parser
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -15,7 +16,13 @@ type parseTreeVisitor struct {
 	parser.BaseTsSqlParserVisitor
 }
 
-func Parse(sql string) (interface{}, error) {
+func Parse(sql string) (result interface{}, err error) {
+	defer func() {
+		if e := recover(); e != nil {
+			err = errors.New(fmt.Sprintf("%v", e))
+		}
+	}()
+
 	if strings.TrimSpace(sql) == "" {
 		return nil, ErrEmptySql
 	}
