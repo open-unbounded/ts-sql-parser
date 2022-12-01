@@ -8,13 +8,13 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
-type VerboseListener struct {
+type errorListener struct {
 	antlr.ConsoleErrorListener
 	errString bytes.Buffer
 }
 
-func (l *VerboseListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
-	l.ConsoleErrorListener.SyntaxError(recognizer, offendingSymbol, line, column, msg, e)
+func (l *errorListener) SyntaxError(recognizer antlr.Recognizer, offendingSymbol interface{}, line, column int, msg string, e antlr.RecognitionException) {
+	//l.ConsoleErrorListener.SyntaxError(recognizer, offendingSymbol, line, column, msg, e)
 	underLineError(&l.errString, recognizer, offendingSymbol.(antlr.Token), line, column)
 }
 
