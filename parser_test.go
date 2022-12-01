@@ -83,8 +83,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a.property")
 		accept := sqlParser.TableName().Accept(visitor)
 		assert.EqualValues(t, TableName{
-			TableName:  "a",
-			SourceType: "PROPERTY",
+			TableName: "a",
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -93,8 +92,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 		sqlParser, visitor, listener := createParser("A.SERVICE")
 		accept := sqlParser.TableName().Accept(visitor)
 		assert.EqualValues(t, TableName{
-			TableName:  "A",
-			SourceType: "SERVICE",
+			TableName: "A",
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -103,8 +101,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 		sqlParser, visitor, listener := createParser("A.EVENT")
 		accept := sqlParser.TableName().Accept(visitor)
 		assert.EqualValues(t, TableName{
-			TableName:  "A",
-			SourceType: "EVENT",
+			TableName: "A",
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -116,8 +113,7 @@ func Test_parseTreeVisitor_VisitFromClause(t *testing.T) {
 		accept := sqlParser.FromClause().Accept(visitor)
 		assert.EqualValues(t, accept, FromClause{
 			TableName: TableName{
-				TableName:  "a",
-				SourceType: "EVENT",
+				TableName: "a",
 			},
 			Expression: LogicalExpression{
 				LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -276,8 +272,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 			},
 		}, accept)
@@ -302,8 +297,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 				Expression: LogicalExpression{
 					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -341,8 +335,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 				Expression: LogicalExpression{
 					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -383,8 +376,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 				Expression: LogicalExpression{
 					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -429,8 +421,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -466,8 +457,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -511,8 +501,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -558,8 +547,7 @@ func TestParse(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
