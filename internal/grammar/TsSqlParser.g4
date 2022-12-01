@@ -46,12 +46,12 @@ tableName
     ;
 
 expression
-    : right=expression logicalOperator left=expression            #logicalExpression
+    : left=expression logicalOperator right=expression            #logicalExpression
     | predicate                                                   #predicateExpression
     ;
 
 predicate
-    : right=predicate comparisonOperator left=predicate           #binaryComparisonPredicate
+    : left=predicate comparisonOperator right=predicate           #binaryComparisonPredicate
     | expressionAtom                                              #expressionAtomPredicate
     ;
 

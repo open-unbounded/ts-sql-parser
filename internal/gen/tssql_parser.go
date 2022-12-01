@@ -1991,8 +1991,8 @@ func (s *ExpressionContext) ToStringTree(ruleNames []string, recog antlr.Recogni
 
 type LogicalExpressionContext struct {
 	*ExpressionContext
-	right IExpressionContext
 	left  IExpressionContext
+	right IExpressionContext
 }
 
 func NewLogicalExpressionContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *LogicalExpressionContext {
@@ -2005,13 +2005,13 @@ func NewLogicalExpressionContext(parser antlr.Parser, ctx antlr.ParserRuleContex
 	return p
 }
 
-func (s *LogicalExpressionContext) GetRight() IExpressionContext { return s.right }
-
 func (s *LogicalExpressionContext) GetLeft() IExpressionContext { return s.left }
 
-func (s *LogicalExpressionContext) SetRight(v IExpressionContext) { s.right = v }
+func (s *LogicalExpressionContext) GetRight() IExpressionContext { return s.right }
 
 func (s *LogicalExpressionContext) SetLeft(v IExpressionContext) { s.left = v }
+
+func (s *LogicalExpressionContext) SetRight(v IExpressionContext) { s.right = v }
 
 func (s *LogicalExpressionContext) GetRuleContext() antlr.RuleContext {
 	return s
@@ -2208,7 +2208,7 @@ func (p *TsSqlParser) expression(_p int) (localctx IExpressionContext) {
 			}
 			_prevctx = localctx
 			localctx = NewLogicalExpressionContext(p, NewExpressionContext(p, _parentctx, _parentState))
-			localctx.(*LogicalExpressionContext).right = _prevctx
+			localctx.(*LogicalExpressionContext).left = _prevctx
 
 			p.PushNewRecursionContext(localctx, _startState, TsSqlParserRULE_expression)
 			p.SetState(117)
@@ -2225,7 +2225,7 @@ func (p *TsSqlParser) expression(_p int) (localctx IExpressionContext) {
 
 				var _x = p.expression(3)
 
-				localctx.(*LogicalExpressionContext).left = _x
+				localctx.(*LogicalExpressionContext).right = _x
 			}
 
 		}
@@ -2345,8 +2345,8 @@ func (s *ExpressionAtomPredicateContext) Accept(visitor antlr.ParseTreeVisitor) 
 
 type BinaryComparisonPredicateContext struct {
 	*PredicateContext
-	right IPredicateContext
 	left  IPredicateContext
+	right IPredicateContext
 }
 
 func NewBinaryComparisonPredicateContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *BinaryComparisonPredicateContext {
@@ -2359,13 +2359,13 @@ func NewBinaryComparisonPredicateContext(parser antlr.Parser, ctx antlr.ParserRu
 	return p
 }
 
-func (s *BinaryComparisonPredicateContext) GetRight() IPredicateContext { return s.right }
-
 func (s *BinaryComparisonPredicateContext) GetLeft() IPredicateContext { return s.left }
 
-func (s *BinaryComparisonPredicateContext) SetRight(v IPredicateContext) { s.right = v }
+func (s *BinaryComparisonPredicateContext) GetRight() IPredicateContext { return s.right }
 
 func (s *BinaryComparisonPredicateContext) SetLeft(v IPredicateContext) { s.left = v }
+
+func (s *BinaryComparisonPredicateContext) SetRight(v IPredicateContext) { s.right = v }
 
 func (s *BinaryComparisonPredicateContext) GetRuleContext() antlr.RuleContext {
 	return s
@@ -2506,7 +2506,7 @@ func (p *TsSqlParser) predicate(_p int) (localctx IPredicateContext) {
 			}
 			_prevctx = localctx
 			localctx = NewBinaryComparisonPredicateContext(p, NewPredicateContext(p, _parentctx, _parentState))
-			localctx.(*BinaryComparisonPredicateContext).right = _prevctx
+			localctx.(*BinaryComparisonPredicateContext).left = _prevctx
 
 			p.PushNewRecursionContext(localctx, _startState, TsSqlParserRULE_predicate)
 			p.SetState(129)
@@ -2523,7 +2523,7 @@ func (p *TsSqlParser) predicate(_p int) (localctx IPredicateContext) {
 
 				var _x = p.predicate(3)
 
-				localctx.(*BinaryComparisonPredicateContext).left = _x
+				localctx.(*BinaryComparisonPredicateContext).right = _x
 			}
 
 		}

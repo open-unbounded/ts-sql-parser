@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createParser(sql string) (*parser.TsSqlParser, *parseTreeVisitor, *VerboseListener) {
+func createParser(sql string) (*parser.TsSqlParser, *parseTreeVisitor, *errorListener) {
 	inputStream := antlr.NewInputStream(sql)
 	lexer := parser.NewTsSqlLexer(inputStream)
 	lexer.RemoveErrorListeners()
@@ -17,7 +17,7 @@ func createParser(sql string) (*parser.TsSqlParser, *parseTreeVisitor, *VerboseL
 	tokens := antlr.NewCommonTokenStream(lexer, antlr.LexerDefaultTokenChannel)
 	tsSqlParser := parser.NewTsSqlParser(tokens)
 	tsSqlParser.RemoveErrorListeners()
-	listener := &VerboseListener{}
+	listener := &errorListener{}
 	tsSqlParser.AddErrorListener(listener)
 	visitor := &parseTreeVisitor{}
 	return tsSqlParser, visitor, listener
@@ -120,16 +120,16 @@ func Test_parseTreeVisitor_VisitFromClause(t *testing.T) {
 				SourceType: "EVENT",
 			},
 			Expression: LogicalExpression{
-				LeftExpression: PredicateExpression{ExpressionAtom: BinaryComparisonPredicate{
-					Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "b"}},
-					Op:    ">=",
+				LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+					Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "a"}},
+					Op:    ">",
 					Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
 				}},
 				Op: "and",
-				RightExpression: PredicateExpression{ExpressionAtom: BinaryComparisonPredicate{
+				RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
 					Left:  ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
-					Op:    ">",
-					Right: ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "a"}},
+					Op:    ">=",
+					Right: ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "b"}},
 				}},
 			},
 		})
@@ -254,5 +254,338 @@ func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
 			},
 		}, accept)
 		fmt.Print(listener.errString.String())
+	})
+}
+
+func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service ")
+		accept := sqlParser.SelectStmt().Accept(visitor)
+		assert.EqualValues(t, SelectStmt{
+			SelectElements: SelectElements{
+				SelectElements: []SelectElement{
+					{
+						FullColumnName: "a",
+						Alias:          "b",
+					},
+					{
+						FullColumnName: "C",
+						Alias:          "D",
+					},
+				},
+			},
+			FromClause: FromClause{
+				TableName: TableName{
+					TableName:  "a",
+					SourceType: "SERVICE",
+				},
+			},
+		}, accept)
+		fmt.Print(listener.errString.String())
+	})
+
+	t.Run("2", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1")
+		accept := sqlParser.SelectStmt().Accept(visitor)
+		assert.EqualValues(t, SelectStmt{
+			SelectElements: SelectElements{
+				SelectElements: []SelectElement{
+					{
+						FullColumnName: "a",
+						Alias:          "b",
+					},
+					{
+						FullColumnName: "C",
+						Alias:          "D",
+					},
+				},
+			},
+			FromClause: FromClause{
+				TableName: TableName{
+					TableName:  "a",
+					SourceType: "SERVICE",
+				},
+				Expression: LogicalExpression{
+					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+						Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+						Op:    ">",
+						Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+					}},
+					Op: "and",
+					RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+						Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+						Op:    "<",
+						Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+					}},
+				},
+			},
+		}, accept)
+		fmt.Print(listener.errString.String())
+	})
+
+	t.Run("3", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 1,2")
+		accept := sqlParser.SelectStmt().Accept(visitor)
+		assert.EqualValues(t, SelectStmt{
+			SelectElements: SelectElements{
+				SelectElements: []SelectElement{
+					{
+						FullColumnName: "a",
+						Alias:          "b",
+					},
+					{
+						FullColumnName: "C",
+						Alias:          "D",
+					},
+				},
+			},
+			FromClause: FromClause{
+				TableName: TableName{
+					TableName:  "a",
+					SourceType: "SERVICE",
+				},
+				Expression: LogicalExpression{
+					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+						Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+						Op:    ">",
+						Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+					}},
+					Op: "and",
+					RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+						Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+						Op:    "<",
+						Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+					}},
+				},
+			},
+			LimitClause: LimitClause{
+				Offset: 1,
+				Limit:  2,
+			},
+		}, accept)
+		fmt.Print(listener.errString.String())
+	})
+	t.Run("4", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		accept := sqlParser.SelectStmt().Accept(visitor)
+		assert.EqualValues(t, SelectStmt{
+			SelectElements: SelectElements{
+				SelectElements: []SelectElement{
+					{
+						FullColumnName: "a",
+						Alias:          "b",
+					},
+					{
+						FullColumnName: "C",
+						Alias:          "D",
+					},
+				},
+			},
+			FromClause: FromClause{
+				TableName: TableName{
+					TableName:  "a",
+					SourceType: "SERVICE",
+				},
+				Expression: LogicalExpression{
+					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+						Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+						Op:    ">",
+						Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+					}},
+					Op: "and",
+					RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+						Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+						Op:    "<",
+						Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+					}},
+				},
+			},
+			LimitClause: LimitClause{
+				Limit: 2,
+			},
+			WindowClause: WindowClause{Duration: "1s"},
+		}, accept)
+		fmt.Print(listener.errString.String())
+	})
+}
+
+func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s);select a b, C AS D from a.service where x>1 and m<2 limit 1,2 INTERVAL(1d);")
+		accept := sqlParser.Root().Accept(visitor)
+		assert.EqualValues(t, []SelectStmt{
+			{
+				SelectElements: SelectElements{
+					SelectElements: []SelectElement{
+						{
+							FullColumnName: "a",
+							Alias:          "b",
+						},
+						{
+							FullColumnName: "C",
+							Alias:          "D",
+						},
+					},
+				},
+				FromClause: FromClause{
+					TableName: TableName{
+						TableName:  "a",
+						SourceType: "SERVICE",
+					},
+					Expression: LogicalExpression{
+						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+							Op:    ">",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+						Op: "and",
+						RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+							Op:    "<",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+					},
+				},
+				LimitClause: LimitClause{
+					Limit: 2,
+				},
+				WindowClause: WindowClause{Duration: "1s"},
+			},
+			{
+				SelectElements: SelectElements{
+					SelectElements: []SelectElement{
+						{
+							FullColumnName: "a",
+							Alias:          "b",
+						},
+						{
+							FullColumnName: "C",
+							Alias:          "D",
+						},
+					},
+				},
+				FromClause: FromClause{
+					TableName: TableName{
+						TableName:  "a",
+						SourceType: "SERVICE",
+					},
+					Expression: LogicalExpression{
+						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+							Op:    ">",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+						Op: "and",
+						RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+							Op:    "<",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 2}}},
+						}},
+					},
+				},
+				LimitClause: LimitClause{
+					Offset: 1,
+					Limit:  2,
+				},
+				WindowClause: WindowClause{Duration: "1d"},
+			},
+		}, accept)
+		fmt.Print(listener.errString.String())
+	})
+	t.Run("2", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s);")
+		accept := sqlParser.Root().Accept(visitor)
+		assert.EqualValues(t, []SelectStmt{
+			{
+				SelectElements: SelectElements{
+					SelectElements: []SelectElement{
+						{
+							FullColumnName: "a",
+							Alias:          "b",
+						},
+						{
+							FullColumnName: "C",
+							Alias:          "D",
+						},
+					},
+				},
+				FromClause: FromClause{
+					TableName: TableName{
+						TableName:  "a",
+						SourceType: "SERVICE",
+					},
+					Expression: LogicalExpression{
+						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+							Op:    ">",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+						Op: "and",
+						RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+							Op:    "<",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+					},
+				},
+				LimitClause: LimitClause{
+					Limit: 2,
+				},
+				WindowClause: WindowClause{Duration: "1s"},
+			},
+		}, accept)
+		fmt.Print(listener.errString.String())
+	})
+}
+
+func TestParse(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		result, err := Parse("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		assert.NoError(t, err)
+		assert.EqualValues(t, []SelectStmt{
+			{
+				SelectElements: SelectElements{
+					SelectElements: []SelectElement{
+						{
+							FullColumnName: "a",
+							Alias:          "b",
+						},
+						{
+							FullColumnName: "C",
+							Alias:          "D",
+						},
+					},
+				},
+				FromClause: FromClause{
+					TableName: TableName{
+						TableName:  "a",
+						SourceType: "SERVICE",
+					},
+					Expression: LogicalExpression{
+						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+							Op:    ">",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+						Op: "and",
+						RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+							Op:    "<",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+					},
+				},
+				LimitClause: LimitClause{
+					Limit: 2,
+				},
+				WindowClause: WindowClause{Duration: "1s"},
+			},
+		}, result)
+	})
+
+	t.Run("2", func(t *testing.T) {
+		result, err := Parse("select a b, C.222 AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		assert.Error(t, err)
+		assert.Nil(t, result)
 	})
 }

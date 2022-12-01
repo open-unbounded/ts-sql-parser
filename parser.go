@@ -1,39 +1,50 @@
 package parser
 
 import (
+	"errors"
 	"strconv"
+	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	parser "github.com/open-unbounded/ts-sql-parser/internal/gen"
 )
 
-type Sql struct {
-}
+var ErrEmptySql = errors.New("empty sql")
+
 type parseTreeVisitor struct {
 	parser.BaseTsSqlParserVisitor
 }
 
-func Parse(sql string) interface{} {
+func Parse(sql string) (interface{}, error) {
+	if strings.TrimSpace(sql) == "" {
+		return nil, ErrEmptySql
+	}
+
 	inputStream := antlr.NewInputStream(sql)
 	lexer := parser.NewTsSqlLexer(inputStream)
 	lexer.RemoveErrorListeners()
 
 	tokens := antlr.NewCommonTokenStream(lexer, antlr.LexerDefaultTokenChannel)
 	mysqlParser := parser.NewTsSqlParser(tokens)
+	mysqlParser.RemoveErrorListeners()
+
+	lis := &errorListener{}
+	mysqlParser.AddErrorListener(lis)
+
 	visitor := &parseTreeVisitor{}
 	accept := mysqlParser.Root().Accept(visitor)
 
-	return accept
+	if lis.errString.Len() != 0 {
+		return nil, errors.New(lis.errString.String())
+	}
+
+	return accept, nil
 }
 
 func (v *parseTreeVisitor) VisitRoot(ctx *parser.RootContext) interface{} {
 	allSelectStmt := ctx.AllSelectStmt()
-	var selectStmts []SelectStmt
-	if len(allSelectStmt) == 0 {
-		return selectStmts
-	}
 
-	selectStmts = make([]SelectStmt, 0, len(allSelectStmt))
+	selectStmts := make([]SelectStmt, 0, len(allSelectStmt))
 	for _, stmtContext := range allSelectStmt {
 		selectStmt := stmtContext.Accept(v).(SelectStmt)
 		selectStmts = append(selectStmts, selectStmt)
@@ -45,8 +56,9 @@ func (v *parseTreeVisitor) VisitRoot(ctx *parser.RootContext) interface{} {
 type (
 	SelectStmt struct {
 		SelectElements SelectElements
-		FromClause
-		LimitClause
+		FromClause     FromClause
+		LimitClause    LimitClause
+		WindowClause   WindowClause
 	}
 
 	SelectElements struct {
@@ -65,6 +77,21 @@ func (v *parseTreeVisitor) VisitSelectStmt(ctx *parser.SelectStmtContext) interf
 	elementsContext := ctx.SelectElements()
 	if elementsContext != nil {
 		stmt.SelectElements = elementsContext.Accept(v).(SelectElements)
+	}
+
+	fromClauseCtx := ctx.FromClause()
+	if fromClauseCtx != nil {
+		stmt.FromClause = fromClauseCtx.Accept(v).(FromClause)
+	}
+
+	limitClauseContext := ctx.LimitClause()
+	if limitClauseContext != nil {
+		stmt.LimitClause = limitClauseContext.Accept(v).(LimitClause)
+	}
+
+	windowClauseContext := ctx.WindowClause()
+	if windowClauseContext != nil {
+		stmt.WindowClause = windowClauseContext.Accept(v).(WindowClause)
 	}
 
 	return stmt
@@ -148,7 +175,9 @@ type (
 func (v *parseTreeVisitor) VisitFromClause(ctx *parser.FromClauseContext) interface{} {
 	fromClause := FromClause{}
 	tableNameContext := ctx.TableName()
-	fromClause.TableName = tableNameContext.Accept(v).(TableName)
+	if tableNameContext != nil {
+		fromClause.TableName = tableNameContext.Accept(v).(TableName)
+	}
 
 	expressionContext := ctx.Expression()
 	if expressionContext != nil {
@@ -199,7 +228,7 @@ type (
 		isExpressionAtom()
 	}
 	PredicateExpression struct {
-		ExpressionAtom ExpressionAtom
+		Predicate Predicate
 	}
 
 	ColumnNameExpressionAtom struct {
@@ -211,7 +240,7 @@ func (p PredicateExpression) isExpression()          {}
 func (c ColumnNameExpressionAtom) isExpressionAtom() {}
 
 func (v *parseTreeVisitor) VisitPredicateExpression(ctx *parser.PredicateExpressionContext) interface{} {
-	return PredicateExpression{ExpressionAtom: ctx.Predicate().Accept(v).(ExpressionAtom)}
+	return PredicateExpression{Predicate: ctx.Predicate().Accept(v).(Predicate)}
 }
 
 // -----------------
@@ -385,10 +414,12 @@ func (v *parseTreeVisitor) VisitBinaryComparisonPredicate(ctx *parser.BinaryComp
 	if leftCtx != nil {
 		binaryComparisonPredicate.Left = leftCtx.Accept(v).(Expression)
 	}
+
 	comparisonOperatorCtx := ctx.ComparisonOperator()
 	if comparisonOperatorCtx != nil {
 		binaryComparisonPredicate.Op = comparisonOperatorCtx.Accept(v).(string)
 	}
+
 	rightCtx := ctx.GetRight()
 	if rightCtx != nil {
 		binaryComparisonPredicate.Right = rightCtx.Accept(v).(Expression)
