@@ -48,13 +48,20 @@ func Test_parseTreeVisitor_VisitConstant(t *testing.T) {
 	})
 
 	t.Run("2", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("-1")
+		accept := sqlParser.Constant().Accept(visitor)
+		assert.EqualValues(t, ConstantDecimal{Val: -1}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+
+	t.Run("3", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("'1'")
 		accept := sqlParser.Constant().Accept(visitor)
 		assert.EqualValues(t, ConstantString{Val: "'1'"}, accept)
 		fmt.Printf(listener.errString.String())
 	})
 
-	t.Run("3", func(t *testing.T) {
+	t.Run("4", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("FALSE")
 		accept := sqlParser.Constant().Accept(visitor)
 		assert.EqualValues(t, ConstantBool{Val: false}, accept)
@@ -112,14 +119,13 @@ func Test_parseTreeVisitor_VisitFromClause(t *testing.T) {
 				TableName:  "a",
 				SourceType: "EVENT",
 			},
-			Alias: "",
 			Expression: LogicalExpression{
 				LeftExpression: PredicateExpression{ExpressionAtom: BinaryComparisonPredicate{
 					Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "b"}},
 					Op:    ">=",
 					Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
 				}},
-				op: "and",
+				Op: "and",
 				RightExpression: PredicateExpression{ExpressionAtom: BinaryComparisonPredicate{
 					Left:  ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
 					Op:    ">",
@@ -136,8 +142,8 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		sqlParser, visitor, listener := createParser("LIMIT 1,2")
 		accept := sqlParser.LimitClause().Accept(visitor)
 		assert.EqualValues(t, LimitClause{
-			offset: 1,
-			limit:  2,
+			Offset: 1,
+			Limit:  2,
 		}, accept)
 		fmt.Printf(listener.errString.String())
 	})
@@ -146,7 +152,7 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		sqlParser, visitor, listener := createParser("LIMIT 2")
 		accept := sqlParser.LimitClause().Accept(visitor)
 		assert.EqualValues(t, LimitClause{
-			limit: 2,
+			Limit: 2,
 		}, accept)
 		fmt.Printf(listener.errString.String())
 	})
@@ -154,7 +160,20 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 	t.Run("ERROR", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("LIMIT 1.22")
 		accept := sqlParser.LimitClause().Accept(visitor)
-		assert.EqualValues(t, LimitClause{offset: 0, limit: 0}, accept)
+		assert.EqualValues(t, LimitClause{Offset: 0, Limit: 0}, accept)
 		fmt.Printf(listener.errString.String())
+	})
+}
+
+func Test_parseTreeVisitor_VisitWindowClause(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		for _, s := range []string{"1s", "1h", "1d", "3d", "30h", "300s"} {
+			sqlParser, visitor, listener := createParser(fmt.Sprintf("INTERVAL(%s)", s))
+			accept := sqlParser.WindowClause().Accept(visitor)
+			assert.EqualValues(t, WindowClause{
+				Duration: s,
+			}, accept)
+			fmt.Printf(listener.errString.String())
+		}
 	})
 }

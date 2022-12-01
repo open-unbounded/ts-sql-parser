@@ -45,6 +45,8 @@ func (v *parseTreeVisitor) VisitRoot(ctx *parser.RootContext) interface{} {
 type (
 	SelectStmt struct {
 		SelectElements SelectElements
+		FromClause
+		LimitClause
 	}
 	SelectElements struct {
 		Star           bool
@@ -83,10 +85,7 @@ func (v *parseTreeVisitor) VisitSelectElements(ctx *parser.SelectElementsContext
 }
 
 func (v *parseTreeVisitor) VisitSelectElement(ctx *parser.SelectElementContext) interface{} {
-	element := SelectElement{
-		FullColumnName: "",
-		Alias:          "",
-	}
+	element := SelectElement{}
 
 	fullColumnNameContext := ctx.FullColumnName()
 	if fullColumnNameContext != nil {
@@ -133,7 +132,6 @@ func (v *parseTreeVisitor) VisitTableName(ctx *parser.TableNameContext) interfac
 type (
 	FromClause struct {
 		TableName  TableName
-		Alias      string
 		Expression Expression
 	}
 )
@@ -142,11 +140,6 @@ func (v *parseTreeVisitor) VisitFromClause(ctx *parser.FromClauseContext) interf
 	fromClause := FromClause{}
 	tableNameContext := ctx.TableName()
 	fromClause.TableName = tableNameContext.Accept(v).(TableName)
-
-	uidContext := ctx.Uid()
-	if uidContext != nil {
-		fromClause.Alias = uidContext.Accept(v).(string)
-	}
 
 	expressionContext := ctx.Expression()
 	if expressionContext != nil {
@@ -170,7 +163,7 @@ var _ Expression = (*LogicalExpression)(nil)
 type (
 	LogicalExpression struct {
 		LeftExpression  Expression
-		op              string
+		Op              string
 		RightExpression Expression
 	}
 )
@@ -182,7 +175,7 @@ func (v *parseTreeVisitor) VisitLogicalExpression(ctx *parser.LogicalExpressionC
 	rightCtx := ctx.GetRight()
 	return LogicalExpression{
 		LeftExpression:  leftCtx.Accept(v).(Expression),
-		op:              ctx.LogicalOperator().Accept(v).(string),
+		Op:              ctx.LogicalOperator().Accept(v).(string),
 		RightExpression: rightCtx.Accept(v).(Expression),
 	}
 }
@@ -312,20 +305,20 @@ func (v *parseTreeVisitor) VisitColumnName(ctx *parser.ColumnNameContext) interf
 // -----------------
 
 type LimitClause struct {
-	offset int
-	limit  int
+	Offset int
+	Limit  int
 }
 
 func (v *parseTreeVisitor) VisitLimitClause(ctx *parser.LimitClauseContext) interface{} {
 	limitClause := LimitClause{}
 	limitCtx := ctx.GetLimit()
 	if limitCtx != nil {
-		limitClause.limit = limitCtx.Accept(v).(int)
+		limitClause.Limit = limitCtx.Accept(v).(int)
 	}
 
 	offsetCtx := ctx.GetOffset()
 	if offsetCtx != nil {
-		limitClause.offset = offsetCtx.Accept(v).(int)
+		limitClause.Offset = offsetCtx.Accept(v).(int)
 	}
 
 	return limitClause
@@ -337,9 +330,21 @@ func (v *parseTreeVisitor) VisitLimitClauseAtom(ctx *parser.LimitClauseAtomConte
 
 // -----------------
 
-func (v *parseTreeVisitor) VisitWindowClause(ctx *parser.WindowClauseContext) interface{} {
-	return nil
+type WindowClause struct {
+	Duration string
 }
+
+func (v *parseTreeVisitor) VisitWindowClause(ctx *parser.WindowClauseContext) interface{} {
+	windowClause := WindowClause{}
+	timeIntervalCtx := ctx.TIME_INTERVAL()
+	if timeIntervalCtx != nil {
+		windowClause.Duration = timeIntervalCtx.GetText()
+	}
+
+	return windowClause
+}
+
+// -----------------
 
 func (v *parseTreeVisitor) VisitLogicalOperator(ctx *parser.LogicalOperatorContext) interface{} {
 	return ctx.GetText()

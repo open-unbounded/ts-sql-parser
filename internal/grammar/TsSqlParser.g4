@@ -19,7 +19,7 @@ selectElement
     ;
 
 fromClause
-    : FROM tableName (AS uid)? (WHERE expression )?
+    : FROM tableName  (WHERE expression )?
     ;
 
 limitClause
