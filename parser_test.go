@@ -28,14 +28,14 @@ func Test_parseTreeVisitor_VisitLogicalOperator(t *testing.T) {
 		sqlParser, visitor, listener := createParser("AND")
 		accept := sqlParser.LogicalOperator().Accept(visitor)
 		assert.EqualValues(t, "AND", accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("2", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("OR")
 		accept := sqlParser.LogicalOperator().Accept(visitor)
 		assert.EqualValues(t, "OR", accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -44,21 +44,21 @@ func Test_parseTreeVisitor_VisitConstant(t *testing.T) {
 		sqlParser, visitor, listener := createParser("1")
 		accept := sqlParser.Constant().Accept(visitor)
 		assert.EqualValues(t, ConstantDecimal{Val: 1}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("2", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("'1'")
 		accept := sqlParser.Constant().Accept(visitor)
 		assert.EqualValues(t, ConstantString{Val: "'1'"}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("3", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("FALSE")
 		accept := sqlParser.Constant().Accept(visitor)
 		assert.EqualValues(t, ConstantBool{Val: false}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -67,7 +67,7 @@ func Test_parseTreeVisitor_VisitUid(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a")
 		accept := sqlParser.Uid().Accept(visitor)
 		assert.EqualValues(t, "a", accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -79,7 +79,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 			TableName:  "a",
 			SourceType: "PROPERTY",
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("2", func(t *testing.T) {
@@ -89,7 +89,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 			TableName:  "A",
 			SourceType: "SERVICE",
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("3", func(t *testing.T) {
@@ -99,7 +99,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 			TableName:  "A",
 			SourceType: "EVENT",
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -127,7 +127,7 @@ func Test_parseTreeVisitor_VisitFromClause(t *testing.T) {
 				}},
 			},
 		})
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -139,7 +139,7 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 			offset: 1,
 			limit:  2,
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("2", func(t *testing.T) {
@@ -148,14 +148,14 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		assert.EqualValues(t, LimitClause{
 			limit: 2,
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("ERROR", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("LIMIT 1.22")
 		accept := sqlParser.LimitClause().Accept(visitor)
 		assert.EqualValues(t, LimitClause{offset: 0, limit: 0}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -167,7 +167,7 @@ func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
 			FullColumnName: "a",
 			Alias:          "b",
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("2", func(t *testing.T) {
@@ -176,7 +176,7 @@ func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
 		assert.EqualValues(t, SelectElement{
 			FullColumnName: "a",
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("3", func(t *testing.T) {
@@ -186,7 +186,7 @@ func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
 			FullColumnName: "a",
 			Alias:          "B",
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
 
@@ -197,7 +197,7 @@ func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
 		assert.EqualValues(t, SelectElements{
 			Star: true,
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("2", func(t *testing.T) {
@@ -216,7 +216,7 @@ func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
 				},
 			},
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 
 	t.Run("3", func(t *testing.T) {
@@ -234,6 +234,6 @@ func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
 				},
 			},
 		}, accept)
-		fmt.Printf(listener.errString.String())
+		fmt.Print(listener.errString.String())
 	})
 }
