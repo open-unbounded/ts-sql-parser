@@ -19,7 +19,7 @@ type parseTreeVisitor struct {
 func Parse(sql string) (result interface{}, err error) {
 	defer func() {
 		if e := recover(); e != nil {
-			err = errors.New(fmt.Sprintf("%v", e))
+			err = fmt.Errorf("%v", e)
 		}
 	}()
 
