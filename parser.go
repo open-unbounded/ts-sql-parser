@@ -46,6 +46,7 @@ type (
 	SelectStmt struct {
 		SelectElements SelectElements
 	}
+
 	SelectElements struct {
 		Star           bool
 		SelectElements []SelectElement
@@ -100,6 +101,14 @@ func (v *parseTreeVisitor) VisitSelectElement(ctx *parser.SelectElementContext) 
 
 	return element
 }
+
+// -----------------
+
+func (v *parseTreeVisitor) VisitFullColumnName(ctx *parser.FullColumnNameContext) interface{} {
+	return ctx.Uid().Accept(v).(string)
+}
+
+// -----------------
 
 func (v *parseTreeVisitor) VisitUid(ctx *parser.UidContext) interface{} {
 	return ctx.GetText()
