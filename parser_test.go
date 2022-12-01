@@ -158,3 +158,82 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		fmt.Printf(listener.errString.String())
 	})
 }
+
+func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("a b")
+		accept := sqlParser.SelectElement().Accept(visitor)
+		assert.EqualValues(t, SelectElement{
+			FullColumnName: "a",
+			Alias:          "b",
+		}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+
+	t.Run("2", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("a")
+		accept := sqlParser.SelectElement().Accept(visitor)
+		assert.EqualValues(t, SelectElement{
+			FullColumnName: "a",
+		}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+
+	t.Run("3", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("a AS B")
+		accept := sqlParser.SelectElement().Accept(visitor)
+		assert.EqualValues(t, SelectElement{
+			FullColumnName: "a",
+			Alias:          "B",
+		}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+}
+
+func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("*")
+		accept := sqlParser.SelectElements().Accept(visitor)
+		assert.EqualValues(t, SelectElements{
+			Star: true,
+		}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+
+	t.Run("2", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser("*, a b, c AS D")
+		accept := sqlParser.SelectElements().Accept(visitor)
+		assert.EqualValues(t, SelectElements{
+			Star: true,
+			SelectElements: []SelectElement{
+				{
+					FullColumnName: "a",
+					Alias:          "b",
+				},
+				{
+					FullColumnName: "c",
+					Alias:          "D",
+				},
+			},
+		}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+
+	t.Run("3", func(t *testing.T) {
+		sqlParser, visitor, listener := createParser(" a b, C AS D")
+		accept := sqlParser.SelectElements().Accept(visitor)
+		assert.EqualValues(t, SelectElements{
+			SelectElements: []SelectElement{
+				{
+					FullColumnName: "a",
+					Alias:          "b",
+				},
+				{
+					FullColumnName: "C",
+					Alias:          "D",
+				},
+			},
+		}, accept)
+		fmt.Printf(listener.errString.String())
+	})
+}
