@@ -39,36 +39,6 @@ func Test_parseTreeVisitor_VisitLogicalOperator(t *testing.T) {
 	})
 }
 
-func Test_parseTreeVisitor_VisitConstant(t *testing.T) {
-	t.Run("1", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("1")
-		accept := sqlParser.Constant().Accept(visitor)
-		assert.EqualValues(t, ConstantDecimal{Val: 1}, accept)
-		fmt.Print(listener.errString.String())
-	})
-
-	t.Run("2", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("-1")
-		accept := sqlParser.Constant().Accept(visitor)
-		assert.EqualValues(t, ConstantDecimal{Val: -1}, accept)
-		fmt.Print(listener.errString.String())
-	})
-
-	t.Run("3", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("'1'")
-		accept := sqlParser.Constant().Accept(visitor)
-		assert.EqualValues(t, ConstantString{Val: "'1'"}, accept)
-		fmt.Print(listener.errString.String())
-	})
-
-	t.Run("4", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("FALSE")
-		accept := sqlParser.Constant().Accept(visitor)
-		assert.EqualValues(t, ConstantBool{Val: false}, accept)
-		fmt.Print(listener.errString.String())
-	})
-}
-
 func Test_parseTreeVisitor_VisitUid(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a")
@@ -182,7 +152,7 @@ func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a b")
 		accept := sqlParser.SelectElement().Accept(visitor)
-		assert.EqualValues(t, SelectElement{
+		assert.EqualValues(t, SelectColumnElement{
 			FullColumnName: "a",
 			Alias:          "b",
 		}, accept)
@@ -192,7 +162,7 @@ func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
 	t.Run("2", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a")
 		accept := sqlParser.SelectElement().Accept(visitor)
-		assert.EqualValues(t, SelectElement{
+		assert.EqualValues(t, SelectColumnElement{
 			FullColumnName: "a",
 		}, accept)
 		fmt.Print(listener.errString.String())
@@ -201,7 +171,7 @@ func Test_parseTreeVisitor_VisitSelectElement(t *testing.T) {
 	t.Run("3", func(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a AS B")
 		accept := sqlParser.SelectElement().Accept(visitor)
-		assert.EqualValues(t, SelectElement{
+		assert.EqualValues(t, SelectColumnElement{
 			FullColumnName: "a",
 			Alias:          "B",
 		}, accept)
@@ -225,11 +195,11 @@ func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
 		assert.EqualValues(t, SelectElements{
 			Star: true,
 			SelectElements: []SelectElement{
-				{
+				SelectColumnElement{
 					FullColumnName: "a",
 					Alias:          "b",
 				},
-				{
+				SelectColumnElement{
 					FullColumnName: "c",
 					Alias:          "D",
 				},
@@ -243,11 +213,11 @@ func Test_parseTreeVisitor_VisitSelectElements(t *testing.T) {
 		accept := sqlParser.SelectElements().Accept(visitor)
 		assert.EqualValues(t, SelectElements{
 			SelectElements: []SelectElement{
-				{
+				SelectColumnElement{
 					FullColumnName: "a",
 					Alias:          "b",
 				},
-				{
+				SelectColumnElement{
 					FullColumnName: "C",
 					Alias:          "D",
 				},
@@ -264,11 +234,11 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
 				SelectElements: []SelectElement{
-					{
+					SelectColumnElement{
 						FullColumnName: "a",
 						Alias:          "b",
 					},
-					{
+					SelectColumnElement{
 						FullColumnName: "C",
 						Alias:          "D",
 					},
@@ -290,11 +260,11 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
 				SelectElements: []SelectElement{
-					{
+					SelectColumnElement{
 						FullColumnName: "a",
 						Alias:          "b",
 					},
-					{
+					SelectColumnElement{
 						FullColumnName: "C",
 						Alias:          "D",
 					},
@@ -329,11 +299,11 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
 				SelectElements: []SelectElement{
-					{
+					SelectColumnElement{
 						FullColumnName: "a",
 						Alias:          "b",
 					},
-					{
+					SelectColumnElement{
 						FullColumnName: "C",
 						Alias:          "D",
 					},
@@ -371,11 +341,11 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
 				SelectElements: []SelectElement{
-					{
+					SelectColumnElement{
 						FullColumnName: "a",
 						Alias:          "b",
 					},
-					{
+					SelectColumnElement{
 						FullColumnName: "C",
 						Alias:          "D",
 					},
@@ -417,11 +387,11 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 			{
 				SelectElements: SelectElements{
 					SelectElements: []SelectElement{
-						{
+						SelectColumnElement{
 							FullColumnName: "a",
 							Alias:          "b",
 						},
-						{
+						SelectColumnElement{
 							FullColumnName: "C",
 							Alias:          "D",
 						},
@@ -454,11 +424,11 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 			{
 				SelectElements: SelectElements{
 					SelectElements: []SelectElement{
-						{
-							FullColumnName: "a",
+						SelectColumnElement{
+							FullColumnName: FullColumnName("a"),
 							Alias:          "b",
 						},
-						{
+						SelectColumnElement{
 							FullColumnName: "C",
 							Alias:          "D",
 						},
@@ -499,11 +469,11 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 			{
 				SelectElements: SelectElements{
 					SelectElements: []SelectElement{
-						{
+						SelectColumnElement{
 							FullColumnName: "a",
 							Alias:          "b",
 						},
-						{
+						SelectColumnElement{
 							FullColumnName: "C",
 							Alias:          "D",
 						},
@@ -546,11 +516,11 @@ func TestParse(t *testing.T) {
 			{
 				SelectElements: SelectElements{
 					SelectElements: []SelectElement{
-						{
+						SelectColumnElement{
 							FullColumnName: "a",
 							Alias:          "b",
 						},
-						{
+						SelectColumnElement{
 							FullColumnName: "C",
 							Alias:          "D",
 						},

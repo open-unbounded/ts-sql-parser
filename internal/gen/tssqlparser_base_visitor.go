@@ -20,7 +20,11 @@ func (v *BaseTsSqlParserVisitor) VisitSelectElements(ctx *SelectElementsContext)
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseTsSqlParserVisitor) VisitSelectElement(ctx *SelectElementContext) interface{} {
+func (v *BaseTsSqlParserVisitor) VisitSelectColumnElement(ctx *SelectColumnElementContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTsSqlParserVisitor) VisitSelectFunctionElement(ctx *SelectFunctionElementContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -69,6 +73,18 @@ func (v *BaseTsSqlParserVisitor) VisitConstantExpressionAtom(ctx *ConstantExpres
 }
 
 func (v *BaseTsSqlParserVisitor) VisitColumnNameExpressionAtom(ctx *ColumnNameExpressionAtomContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTsSqlParserVisitor) VisitFunctionCall(ctx *FunctionCallContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTsSqlParserVisitor) VisitAggregateWindowedFunction(ctx *AggregateWindowedFunctionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseTsSqlParserVisitor) VisitFunctionArg(ctx *FunctionArgContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

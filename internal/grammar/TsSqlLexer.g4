@@ -16,9 +16,9 @@ LINE_COMMENT:                        (
 
 
 
-DOT_PROPERTY: '.PROPERTY';
-DOT_SERVICE: '.SERVICE';
-DOT_EVENT: '.EVENT';
+DOT_PROPERTY:                        '.PROPERTY';
+DOT_SERVICE:                         '.SERVICE';
+DOT_EVENT:                           '.EVENT';
 FALSE:                               'FALSE';
 TRUE:                                'TRUE';
 
@@ -49,6 +49,16 @@ MINUS:                               '-';
 DIV:                                 'DIV';
 MOD:                                 'MOD';
 
+ALL:                                 'ALL';
+AVG:                                 'AVG';
+COUNT:                               'COUNT';
+MAX:                                 'MAX';
+MIN:                                 'MIN';
+SUM:                                 'SUM';
+STD:                                 'STD';
+STDDEV:                              'STDDEV';
+
+DISTINCT:                            'DISTINCT';
 
 
 EQUAL_SYMBOL:                        '=';
@@ -61,7 +71,7 @@ BIT_OR_OP:                           '|';
 BIT_AND_OP:                          '&';
 BIT_XOR_OP:                          '^';
 
-TIME_INTERVAL:  DEC_DIGIT+ ('S'|'M'|'H'|'D');
+TIME_INTERVAL:                       DEC_DIGIT+ ('S'|'M'|'H'|'D');
 
 DOT:                                 '.';
 LR_BRACKET:                          '(';

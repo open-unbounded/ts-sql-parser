@@ -17,8 +17,11 @@ type TsSqlParserVisitor interface {
 	// Visit a parse tree produced by TsSqlParser#selectElements.
 	VisitSelectElements(ctx *SelectElementsContext) interface{}
 
-	// Visit a parse tree produced by TsSqlParser#selectElement.
-	VisitSelectElement(ctx *SelectElementContext) interface{}
+	// Visit a parse tree produced by TsSqlParser#selectColumnElement.
+	VisitSelectColumnElement(ctx *SelectColumnElementContext) interface{}
+
+	// Visit a parse tree produced by TsSqlParser#selectFunctionElement.
+	VisitSelectFunctionElement(ctx *SelectFunctionElementContext) interface{}
 
 	// Visit a parse tree produced by TsSqlParser#fromClause.
 	VisitFromClause(ctx *FromClauseContext) interface{}
@@ -55,6 +58,15 @@ type TsSqlParserVisitor interface {
 
 	// Visit a parse tree produced by TsSqlParser#columnNameExpressionAtom.
 	VisitColumnNameExpressionAtom(ctx *ColumnNameExpressionAtomContext) interface{}
+
+	// Visit a parse tree produced by TsSqlParser#functionCall.
+	VisitFunctionCall(ctx *FunctionCallContext) interface{}
+
+	// Visit a parse tree produced by TsSqlParser#aggregateWindowedFunction.
+	VisitAggregateWindowedFunction(ctx *AggregateWindowedFunctionContext) interface{}
+
+	// Visit a parse tree produced by TsSqlParser#functionArg.
+	VisitFunctionArg(ctx *FunctionArgContext) interface{}
 
 	// Visit a parse tree produced by TsSqlParser#columnName.
 	VisitColumnName(ctx *ColumnNameContext) interface{}
