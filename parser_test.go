@@ -114,6 +114,7 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		assert.EqualValues(t, LimitClause{
 			Offset: 1,
 			Limit:  2,
+			Valid:  true,
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -123,6 +124,7 @@ func Test_parseTreeVisitor_VisitLimitClause(t *testing.T) {
 		accept := sqlParser.LimitClause().Accept(visitor)
 		assert.EqualValues(t, LimitClause{
 			Limit: 2,
+			Valid: true,
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -331,6 +333,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			LimitClause: LimitClause{
 				Offset: 1,
 				Limit:  2,
+				Valid:  true,
 			},
 		}, accept)
 		fmt.Print(listener.errString.String())
@@ -372,6 +375,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			LimitClause: LimitClause{
 				Limit: 2,
+				Valid: true,
 			},
 			WindowClause: WindowClause{Duration: "1s"},
 		}, accept)
@@ -418,6 +422,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				LimitClause: LimitClause{
 					Limit: 2,
+					Valid: true,
 				},
 				WindowClause: WindowClause{Duration: "1s"},
 			},
@@ -456,6 +461,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				LimitClause: LimitClause{
 					Offset: 1,
 					Limit:  2,
+					Valid:  true,
 				},
 				WindowClause: WindowClause{Duration: "1d"},
 			},
@@ -499,7 +505,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 					},
 				},
 				LimitClause: LimitClause{
-					Limit: 2,
+					Limit: 2, Valid: true,
 				},
 				WindowClause: WindowClause{Duration: "1s"},
 			},
@@ -547,6 +553,7 @@ func TestParse(t *testing.T) {
 				},
 				LimitClause: LimitClause{
 					Limit: 2,
+					Valid: true,
 				},
 				WindowClause: WindowClause{Duration: "1s"},
 			},
@@ -608,6 +615,7 @@ func TestParse(t *testing.T) {
 				},
 				LimitClause: LimitClause{
 					Limit: 2,
+					Valid: true,
 				},
 				WindowClause: WindowClause{Duration: "1s"},
 			},
