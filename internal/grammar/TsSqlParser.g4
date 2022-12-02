@@ -72,7 +72,7 @@ aggregateWindowedFunction
     ;
 
 functionArg
-    : fullColumnName |constant | functionCall 
+    : fullColumnName | constant
     ;
 
 columnName
