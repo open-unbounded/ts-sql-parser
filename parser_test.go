@@ -83,8 +83,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 		sqlParser, visitor, listener := createParser("a.property")
 		accept := sqlParser.TableName().Accept(visitor)
 		assert.EqualValues(t, TableName{
-			TableName:  "a",
-			SourceType: "PROPERTY",
+			TableName: "a",
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -93,8 +92,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 		sqlParser, visitor, listener := createParser("A.SERVICE")
 		accept := sqlParser.TableName().Accept(visitor)
 		assert.EqualValues(t, TableName{
-			TableName:  "A",
-			SourceType: "SERVICE",
+			TableName: "A",
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -103,8 +101,7 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 		sqlParser, visitor, listener := createParser("A.EVENT")
 		accept := sqlParser.TableName().Accept(visitor)
 		assert.EqualValues(t, TableName{
-			TableName:  "A",
-			SourceType: "EVENT",
+			TableName: "A",
 		}, accept)
 		fmt.Print(listener.errString.String())
 	})
@@ -112,12 +109,11 @@ func Test_parseTreeVisitor_VisitTableName(t *testing.T) {
 
 func Test_parseTreeVisitor_VisitFromClause(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("FROM a.EVENT WHERE a>1 and 1>=b")
+		sqlParser, visitor, listener := createParser("FROM a WHERE a>1 and 1>=b")
 		accept := sqlParser.FromClause().Accept(visitor)
 		assert.EqualValues(t, accept, FromClause{
 			TableName: TableName{
-				TableName:  "a",
-				SourceType: "EVENT",
+				TableName: "a",
 			},
 			Expression: LogicalExpression{
 				LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -276,8 +272,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 			},
 		}, accept)
@@ -285,7 +280,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 	})
 
 	t.Run("2", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1")
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a where x>1 and m<1")
 		accept := sqlParser.SelectStmt().Accept(visitor)
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
@@ -302,8 +297,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 				Expression: LogicalExpression{
 					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -324,7 +318,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 	})
 
 	t.Run("3", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 1,2")
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a where x>1 and m<1 limit 1,2")
 		accept := sqlParser.SelectStmt().Accept(visitor)
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
@@ -341,8 +335,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 				Expression: LogicalExpression{
 					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -366,7 +359,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 		fmt.Print(listener.errString.String())
 	})
 	t.Run("4", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a where x>1 and m<1 limit 2 INTERVAL(1s)")
 		accept := sqlParser.SelectStmt().Accept(visitor)
 		assert.EqualValues(t, SelectStmt{
 			SelectElements: SelectElements{
@@ -383,8 +376,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 			},
 			FromClause: FromClause{
 				TableName: TableName{
-					TableName:  "a",
-					SourceType: "SERVICE",
+					TableName: "a",
 				},
 				Expression: LogicalExpression{
 					LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -411,7 +403,7 @@ func Test_parseTreeVisitor_VisitSelectStmt(t *testing.T) {
 
 func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s);select a b, C AS D from a.service where x>1 and m<2 limit 1,2 INTERVAL(1d);")
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a where x>1 and m<1 limit 2 INTERVAL(1s);select a b, C AS D from a where x>1 and m<2 limit 1,2 INTERVAL(1d);")
 		accept := sqlParser.Root().Accept(visitor)
 		assert.EqualValues(t, []SelectStmt{
 			{
@@ -429,8 +421,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -466,8 +457,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -493,7 +483,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 		fmt.Print(listener.errString.String())
 	})
 	t.Run("2", func(t *testing.T) {
-		sqlParser, visitor, listener := createParser("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s);")
+		sqlParser, visitor, listener := createParser("select a b, C AS D from a where x>1 and m<1 limit 2 INTERVAL(1s);")
 		accept := sqlParser.Root().Accept(visitor)
 		assert.EqualValues(t, []SelectStmt{
 			{
@@ -511,8 +501,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
@@ -540,7 +529,7 @@ func Test_parseTreeVisitor_VisitRoot(t *testing.T) {
 
 func TestParse(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
-		result, err := Parse("select a b, C AS D from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		result, err := Parse("select a b, C AS D from a where x>1 and m<1 limit 2 INTERVAL(1s)")
 		assert.NoError(t, err)
 		assert.EqualValues(t, []SelectStmt{
 			{
@@ -558,8 +547,7 @@ func TestParse(t *testing.T) {
 				},
 				FromClause: FromClause{
 					TableName: TableName{
-						TableName:  "a",
-						SourceType: "SERVICE",
+						TableName: "a",
 					},
 					Expression: LogicalExpression{
 						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
