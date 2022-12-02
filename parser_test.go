@@ -558,4 +558,60 @@ func TestParse(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, result)
 	})
+
+	t.Run("3", func(t *testing.T) {
+		result, err := Parse("select count(a) b, sum(C) AS D, c from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		assert.NoError(t, err)
+		assert.EqualValues(t, []SelectStmt{
+			{
+				SelectElements: SelectElements{
+					SelectElements: []SelectElement{
+						SelectFunctionElement{
+							FunctionCall: AggregateWindowedFunction{
+								Function:    "COUNT",
+								StarArg:     false,
+								FunctionArg: FullColumnName("a"),
+							},
+							Alias: "b",
+						},
+						SelectFunctionElement{
+							FunctionCall: AggregateWindowedFunction{
+								Function:    "SUM",
+								StarArg:     false,
+								FunctionArg: FullColumnName("C"),
+							},
+							Alias: "D",
+						},
+						SelectColumnElement{
+							FullColumnName: "c",
+						},
+					},
+				},
+				FromClause: FromClause{
+					TableName: TableName{
+						TableName:  "a",
+						SourceType: "SERVICE",
+					},
+					Expression: LogicalExpression{
+						LeftExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "x"}},
+							Op:    ">",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+						Op: "and",
+						RightExpression: PredicateExpression{Predicate: BinaryComparisonPredicate{
+							Left:  ExpressionAtomPredicate{ExpressionAtom: ColumnNameExpressionAtom{ColumnName: "m"}},
+							Op:    "<",
+							Right: ExpressionAtomPredicate{ExpressionAtom: ConstantExpressionAtom{Constant: ConstantDecimal{Val: 1}}},
+						}},
+					},
+				},
+				LimitClause: LimitClause{
+					Limit: 2,
+				},
+				WindowClause: WindowClause{Duration: "1s"},
+			},
+		}, result)
+	})
+
 }
