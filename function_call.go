@@ -71,8 +71,6 @@ func (v *parseTreeVisitor) VisitFunctionArg(ctx *parser.FunctionArgContext) inte
 		functionArg = constantContext.Accept(v).(Constant)
 	} else if columnNameContext := ctx.FullColumnName(); columnNameContext != nil {
 		functionArg = columnNameContext.Accept(v).(FullColumnName)
-	} else if functionCallContext := ctx.FunctionCall(); functionCallContext != nil {
-		functionArg = functionCallContext.Accept(v).(FunctionCall)
 	}
 
 	return functionArg
