@@ -36,17 +36,19 @@ func tssqlparserParserInit() {
 		"", "", "", "", "", "'.PROPERTY'", "'.SERVICE'", "'.EVENT'", "'FALSE'",
 		"'TRUE'", "'SELECT'", "'FROM'", "'WHERE'", "'INTERVAL'", "'AND'", "'IN'",
 		"'IS'", "'OR'", "'AS'", "'XOR'", "'JOIN'", "'LEFT'", "'LIKE'", "'LIMIT'",
-		"'NOT'", "'*'", "'/'", "'%'", "'+'", "'-'", "'DIV'", "'MOD'", "'='",
-		"'>'", "'<'", "'!'", "'~'", "'|'", "'&'", "'^'", "", "'.'", "'('", "')'",
-		"','", "';'", "'@'", "'0'", "'1'", "'2'", "'''", "'\"'", "'`'", "':'",
-		"", "'NULL'", "", "", "'PROPERTY'", "'SERVICE'",
+		"'NOT'", "'*'", "'/'", "'%'", "'+'", "'-'", "'DIV'", "'MOD'", "'ALL'",
+		"'AVG'", "'COUNT'", "'MAX'", "'MIN'", "'SUM'", "'STD'", "'STDDEV'",
+		"'DISTINCT'", "'='", "'>'", "'<'", "'!'", "'~'", "'|'", "'&'", "'^'",
+		"", "'.'", "'('", "')'", "','", "';'", "'@'", "'0'", "'1'", "'2'", "'''",
+		"'\"'", "'`'", "':'", "", "'NULL'", "", "", "'PROPERTY'", "'SERVICE'",
 	}
 	staticData.symbolicNames = []string{
 		"", "SPACE", "SPEC_MYSQL_COMMENT", "COMMENT_INPUT", "LINE_COMMENT",
 		"DOT_PROPERTY", "DOT_SERVICE", "DOT_EVENT", "FALSE", "TRUE", "SELECT",
 		"FROM", "WHERE", "INTERVAL", "AND", "IN", "IS", "OR", "AS", "XOR", "JOIN",
 		"LEFT", "LIKE", "LIMIT", "NOT", "STAR", "DIVIDE", "MODULE", "PLUS",
-		"MINUS", "DIV", "MOD", "EQUAL_SYMBOL", "GREATER_SYMBOL", "LESS_SYMBOL",
+		"MINUS", "DIV", "MOD", "ALL", "AVG", "COUNT", "MAX", "MIN", "SUM", "STD",
+		"STDDEV", "DISTINCT", "EQUAL_SYMBOL", "GREATER_SYMBOL", "LESS_SYMBOL",
 		"EXCLAMATION_SYMBOL", "BIT_NOT_OP", "BIT_OR_OP", "BIT_AND_OP", "BIT_XOR_OP",
 		"TIME_INTERVAL", "DOT", "LR_BRACKET", "RR_BRACKET", "COMMA", "SEMI",
 		"AT_SIGN", "ZERO_DECIMAL", "ONE_DECIMAL", "TWO_DECIMAL", "SINGLE_QUOTE_SYMB",
@@ -57,95 +59,117 @@ func tssqlparserParserInit() {
 	staticData.ruleNames = []string{
 		"root", "selectStmt", "selectElements", "selectElement", "fromClause",
 		"limitClause", "limitClauseAtom", "windowClause", "uid", "tableName",
-		"expression", "predicate", "expressionAtom", "columnName", "logicalOperator",
-		"comparisonOperator", "fullColumnName", "constant", "stringLiteral",
-		"decimalLiteral", "booleanLiteral", "emptyStatement_",
+		"expression", "predicate", "expressionAtom", "functionCall", "aggregateWindowedFunction",
+		"functionArg", "columnName", "logicalOperator", "comparisonOperator",
+		"fullColumnName", "constant", "stringLiteral", "decimalLiteral", "booleanLiteral",
+		"emptyStatement_",
 	}
 	staticData.predictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 62, 191, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 71, 234, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 2, 15, 7, 15,
 		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7, 20, 2,
-		21, 7, 21, 1, 0, 1, 0, 3, 0, 47, 8, 0, 1, 0, 3, 0, 50, 8, 0, 1, 0, 1, 0,
-		3, 0, 54, 8, 0, 1, 0, 5, 0, 57, 8, 0, 10, 0, 12, 0, 60, 9, 0, 1, 1, 1,
-		1, 1, 1, 1, 1, 3, 1, 66, 8, 1, 1, 1, 3, 1, 69, 8, 1, 1, 2, 1, 2, 3, 2,
-		73, 8, 2, 1, 2, 1, 2, 5, 2, 77, 8, 2, 10, 2, 12, 2, 80, 9, 2, 1, 3, 1,
-		3, 3, 3, 84, 8, 3, 1, 3, 3, 3, 87, 8, 3, 1, 4, 1, 4, 1, 4, 1, 4, 3, 4,
-		93, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5, 3, 5, 99, 8, 5, 1, 5, 1, 5, 1, 6, 1,
-		6, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7, 1, 8, 1, 8, 1, 9, 1, 9, 1, 9, 1, 10, 1,
-		10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 5, 10, 122, 8, 10, 10, 10, 12, 10,
-		125, 9, 10, 1, 11, 1, 11, 1, 11, 1, 11, 1, 11, 1, 11, 1, 11, 5, 11, 134,
-		8, 11, 10, 11, 12, 11, 137, 9, 11, 1, 12, 1, 12, 3, 12, 141, 8, 12, 1,
-		13, 1, 13, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 3, 14, 152,
-		8, 14, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1,
-		15, 1, 15, 1, 15, 1, 15, 1, 15, 3, 15, 168, 8, 15, 1, 16, 1, 16, 1, 17,
-		1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 3, 17, 178, 8, 17, 1, 17, 3, 17, 181,
-		8, 17, 1, 18, 1, 18, 1, 19, 1, 19, 1, 20, 1, 20, 1, 21, 1, 21, 1, 21, 0,
-		2, 20, 22, 22, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
-		32, 34, 36, 38, 40, 42, 0, 5, 2, 0, 47, 49, 60, 60, 1, 0, 5, 7, 1, 0, 55,
-		56, 2, 0, 47, 49, 60, 61, 1, 0, 8, 9, 200, 0, 49, 1, 0, 0, 0, 2, 61, 1,
-		0, 0, 0, 4, 72, 1, 0, 0, 0, 6, 81, 1, 0, 0, 0, 8, 88, 1, 0, 0, 0, 10, 94,
-		1, 0, 0, 0, 12, 102, 1, 0, 0, 0, 14, 104, 1, 0, 0, 0, 16, 109, 1, 0, 0,
-		0, 18, 111, 1, 0, 0, 0, 20, 114, 1, 0, 0, 0, 22, 126, 1, 0, 0, 0, 24, 140,
-		1, 0, 0, 0, 26, 142, 1, 0, 0, 0, 28, 151, 1, 0, 0, 0, 30, 167, 1, 0, 0,
-		0, 32, 169, 1, 0, 0, 0, 34, 180, 1, 0, 0, 0, 36, 182, 1, 0, 0, 0, 38, 184,
-		1, 0, 0, 0, 40, 186, 1, 0, 0, 0, 42, 188, 1, 0, 0, 0, 44, 46, 3, 2, 1,
-		0, 45, 47, 5, 45, 0, 0, 46, 45, 1, 0, 0, 0, 46, 47, 1, 0, 0, 0, 47, 50,
-		1, 0, 0, 0, 48, 50, 3, 42, 21, 0, 49, 44, 1, 0, 0, 0, 49, 48, 1, 0, 0,
-		0, 50, 58, 1, 0, 0, 0, 51, 53, 3, 2, 1, 0, 52, 54, 5, 45, 0, 0, 53, 52,
-		1, 0, 0, 0, 53, 54, 1, 0, 0, 0, 54, 57, 1, 0, 0, 0, 55, 57, 3, 42, 21,
-		0, 56, 51, 1, 0, 0, 0, 56, 55, 1, 0, 0, 0, 57, 60, 1, 0, 0, 0, 58, 56,
-		1, 0, 0, 0, 58, 59, 1, 0, 0, 0, 59, 1, 1, 0, 0, 0, 60, 58, 1, 0, 0, 0,
-		61, 62, 5, 10, 0, 0, 62, 63, 3, 4, 2, 0, 63, 65, 3, 8, 4, 0, 64, 66, 3,
-		10, 5, 0, 65, 64, 1, 0, 0, 0, 65, 66, 1, 0, 0, 0, 66, 68, 1, 0, 0, 0, 67,
-		69, 3, 14, 7, 0, 68, 67, 1, 0, 0, 0, 68, 69, 1, 0, 0, 0, 69, 3, 1, 0, 0,
-		0, 70, 73, 5, 25, 0, 0, 71, 73, 3, 6, 3, 0, 72, 70, 1, 0, 0, 0, 72, 71,
-		1, 0, 0, 0, 73, 78, 1, 0, 0, 0, 74, 75, 5, 44, 0, 0, 75, 77, 3, 6, 3, 0,
-		76, 74, 1, 0, 0, 0, 77, 80, 1, 0, 0, 0, 78, 76, 1, 0, 0, 0, 78, 79, 1,
-		0, 0, 0, 79, 5, 1, 0, 0, 0, 80, 78, 1, 0, 0, 0, 81, 86, 3, 32, 16, 0, 82,
-		84, 5, 18, 0, 0, 83, 82, 1, 0, 0, 0, 83, 84, 1, 0, 0, 0, 84, 85, 1, 0,
-		0, 0, 85, 87, 3, 16, 8, 0, 86, 83, 1, 0, 0, 0, 86, 87, 1, 0, 0, 0, 87,
-		7, 1, 0, 0, 0, 88, 89, 5, 11, 0, 0, 89, 92, 3, 18, 9, 0, 90, 91, 5, 12,
-		0, 0, 91, 93, 3, 20, 10, 0, 92, 90, 1, 0, 0, 0, 92, 93, 1, 0, 0, 0, 93,
-		9, 1, 0, 0, 0, 94, 98, 5, 23, 0, 0, 95, 96, 3, 12, 6, 0, 96, 97, 5, 44,
-		0, 0, 97, 99, 1, 0, 0, 0, 98, 95, 1, 0, 0, 0, 98, 99, 1, 0, 0, 0, 99, 100,
-		1, 0, 0, 0, 100, 101, 3, 12, 6, 0, 101, 11, 1, 0, 0, 0, 102, 103, 7, 0,
-		0, 0, 103, 13, 1, 0, 0, 0, 104, 105, 5, 13, 0, 0, 105, 106, 5, 42, 0, 0,
-		106, 107, 5, 40, 0, 0, 107, 108, 5, 43, 0, 0, 108, 15, 1, 0, 0, 0, 109,
-		110, 5, 54, 0, 0, 110, 17, 1, 0, 0, 0, 111, 112, 3, 16, 8, 0, 112, 113,
-		7, 1, 0, 0, 113, 19, 1, 0, 0, 0, 114, 115, 6, 10, -1, 0, 115, 116, 3, 22,
-		11, 0, 116, 123, 1, 0, 0, 0, 117, 118, 10, 2, 0, 0, 118, 119, 3, 28, 14,
-		0, 119, 120, 3, 20, 10, 3, 120, 122, 1, 0, 0, 0, 121, 117, 1, 0, 0, 0,
-		122, 125, 1, 0, 0, 0, 123, 121, 1, 0, 0, 0, 123, 124, 1, 0, 0, 0, 124,
-		21, 1, 0, 0, 0, 125, 123, 1, 0, 0, 0, 126, 127, 6, 11, -1, 0, 127, 128,
-		3, 24, 12, 0, 128, 135, 1, 0, 0, 0, 129, 130, 10, 2, 0, 0, 130, 131, 3,
-		30, 15, 0, 131, 132, 3, 22, 11, 3, 132, 134, 1, 0, 0, 0, 133, 129, 1, 0,
-		0, 0, 134, 137, 1, 0, 0, 0, 135, 133, 1, 0, 0, 0, 135, 136, 1, 0, 0, 0,
-		136, 23, 1, 0, 0, 0, 137, 135, 1, 0, 0, 0, 138, 141, 3, 34, 17, 0, 139,
-		141, 3, 26, 13, 0, 140, 138, 1, 0, 0, 0, 140, 139, 1, 0, 0, 0, 141, 25,
-		1, 0, 0, 0, 142, 143, 3, 16, 8, 0, 143, 27, 1, 0, 0, 0, 144, 152, 5, 14,
-		0, 0, 145, 146, 5, 38, 0, 0, 146, 152, 5, 38, 0, 0, 147, 152, 5, 19, 0,
-		0, 148, 152, 5, 17, 0, 0, 149, 150, 5, 37, 0, 0, 150, 152, 5, 37, 0, 0,
-		151, 144, 1, 0, 0, 0, 151, 145, 1, 0, 0, 0, 151, 147, 1, 0, 0, 0, 151,
-		148, 1, 0, 0, 0, 151, 149, 1, 0, 0, 0, 152, 29, 1, 0, 0, 0, 153, 168, 5,
-		32, 0, 0, 154, 168, 5, 33, 0, 0, 155, 168, 5, 34, 0, 0, 156, 157, 5, 34,
-		0, 0, 157, 168, 5, 32, 0, 0, 158, 159, 5, 33, 0, 0, 159, 168, 5, 32, 0,
-		0, 160, 161, 5, 34, 0, 0, 161, 168, 5, 33, 0, 0, 162, 163, 5, 35, 0, 0,
-		163, 168, 5, 32, 0, 0, 164, 165, 5, 34, 0, 0, 165, 166, 5, 32, 0, 0, 166,
-		168, 5, 33, 0, 0, 167, 153, 1, 0, 0, 0, 167, 154, 1, 0, 0, 0, 167, 155,
-		1, 0, 0, 0, 167, 156, 1, 0, 0, 0, 167, 158, 1, 0, 0, 0, 167, 160, 1, 0,
-		0, 0, 167, 162, 1, 0, 0, 0, 167, 164, 1, 0, 0, 0, 168, 31, 1, 0, 0, 0,
-		169, 170, 3, 16, 8, 0, 170, 33, 1, 0, 0, 0, 171, 181, 3, 36, 18, 0, 172,
-		181, 3, 38, 19, 0, 173, 174, 5, 29, 0, 0, 174, 181, 3, 38, 19, 0, 175,
-		181, 3, 40, 20, 0, 176, 178, 5, 24, 0, 0, 177, 176, 1, 0, 0, 0, 177, 178,
-		1, 0, 0, 0, 178, 179, 1, 0, 0, 0, 179, 181, 7, 2, 0, 0, 180, 171, 1, 0,
-		0, 0, 180, 172, 1, 0, 0, 0, 180, 173, 1, 0, 0, 0, 180, 175, 1, 0, 0, 0,
-		180, 177, 1, 0, 0, 0, 181, 35, 1, 0, 0, 0, 182, 183, 5, 57, 0, 0, 183,
-		37, 1, 0, 0, 0, 184, 185, 7, 3, 0, 0, 185, 39, 1, 0, 0, 0, 186, 187, 7,
-		4, 0, 0, 187, 41, 1, 0, 0, 0, 188, 189, 5, 45, 0, 0, 189, 43, 1, 0, 0,
-		0, 20, 46, 49, 53, 56, 58, 65, 68, 72, 78, 83, 86, 92, 98, 123, 135, 140,
-		151, 167, 177, 180,
+		21, 7, 21, 2, 22, 7, 22, 2, 23, 7, 23, 2, 24, 7, 24, 1, 0, 1, 0, 3, 0,
+		53, 8, 0, 1, 0, 3, 0, 56, 8, 0, 1, 0, 1, 0, 3, 0, 60, 8, 0, 1, 0, 5, 0,
+		63, 8, 0, 10, 0, 12, 0, 66, 9, 0, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 72, 8,
+		1, 1, 1, 3, 1, 75, 8, 1, 1, 2, 1, 2, 3, 2, 79, 8, 2, 1, 2, 1, 2, 5, 2,
+		83, 8, 2, 10, 2, 12, 2, 86, 9, 2, 1, 3, 1, 3, 3, 3, 90, 8, 3, 1, 3, 3,
+		3, 93, 8, 3, 1, 3, 1, 3, 3, 3, 97, 8, 3, 1, 3, 3, 3, 100, 8, 3, 3, 3, 102,
+		8, 3, 1, 4, 1, 4, 1, 4, 1, 4, 3, 4, 108, 8, 4, 1, 5, 1, 5, 1, 5, 1, 5,
+		3, 5, 114, 8, 5, 1, 5, 1, 5, 1, 6, 1, 6, 1, 7, 1, 7, 1, 7, 1, 7, 1, 7,
+		1, 8, 1, 8, 1, 9, 1, 9, 1, 9, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10, 1, 10,
+		1, 10, 5, 10, 137, 8, 10, 10, 10, 12, 10, 140, 9, 10, 1, 11, 1, 11, 1,
+		11, 1, 11, 1, 11, 1, 11, 1, 11, 5, 11, 149, 8, 11, 10, 11, 12, 11, 152,
+		9, 11, 1, 12, 1, 12, 3, 12, 156, 8, 12, 1, 13, 1, 13, 1, 14, 1, 14, 1,
+		14, 3, 14, 163, 8, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14,
+		3, 14, 172, 8, 14, 1, 14, 3, 14, 175, 8, 14, 1, 14, 3, 14, 178, 8, 14,
+		1, 15, 1, 15, 1, 15, 1, 15, 3, 15, 184, 8, 15, 1, 16, 1, 16, 1, 17, 1,
+		17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 3, 17, 195, 8, 17, 1, 18, 1, 18,
+		1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1,
+		18, 1, 18, 3, 18, 211, 8, 18, 1, 19, 1, 19, 1, 20, 1, 20, 1, 20, 1, 20,
+		1, 20, 1, 20, 3, 20, 221, 8, 20, 1, 20, 3, 20, 224, 8, 20, 1, 21, 1, 21,
+		1, 22, 1, 22, 1, 23, 1, 23, 1, 24, 1, 24, 1, 24, 0, 2, 20, 22, 25, 0, 2,
+		4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+		42, 44, 46, 48, 0, 7, 2, 0, 56, 58, 69, 69, 1, 0, 5, 7, 2, 0, 33, 33, 35,
+		37, 2, 0, 32, 32, 40, 40, 1, 0, 64, 65, 2, 0, 56, 58, 69, 70, 1, 0, 8,
+		9, 250, 0, 55, 1, 0, 0, 0, 2, 67, 1, 0, 0, 0, 4, 78, 1, 0, 0, 0, 6, 101,
+		1, 0, 0, 0, 8, 103, 1, 0, 0, 0, 10, 109, 1, 0, 0, 0, 12, 117, 1, 0, 0,
+		0, 14, 119, 1, 0, 0, 0, 16, 124, 1, 0, 0, 0, 18, 126, 1, 0, 0, 0, 20, 129,
+		1, 0, 0, 0, 22, 141, 1, 0, 0, 0, 24, 155, 1, 0, 0, 0, 26, 157, 1, 0, 0,
+		0, 28, 177, 1, 0, 0, 0, 30, 183, 1, 0, 0, 0, 32, 185, 1, 0, 0, 0, 34, 194,
+		1, 0, 0, 0, 36, 210, 1, 0, 0, 0, 38, 212, 1, 0, 0, 0, 40, 223, 1, 0, 0,
+		0, 42, 225, 1, 0, 0, 0, 44, 227, 1, 0, 0, 0, 46, 229, 1, 0, 0, 0, 48, 231,
+		1, 0, 0, 0, 50, 52, 3, 2, 1, 0, 51, 53, 5, 54, 0, 0, 52, 51, 1, 0, 0, 0,
+		52, 53, 1, 0, 0, 0, 53, 56, 1, 0, 0, 0, 54, 56, 3, 48, 24, 0, 55, 50, 1,
+		0, 0, 0, 55, 54, 1, 0, 0, 0, 56, 64, 1, 0, 0, 0, 57, 59, 3, 2, 1, 0, 58,
+		60, 5, 54, 0, 0, 59, 58, 1, 0, 0, 0, 59, 60, 1, 0, 0, 0, 60, 63, 1, 0,
+		0, 0, 61, 63, 3, 48, 24, 0, 62, 57, 1, 0, 0, 0, 62, 61, 1, 0, 0, 0, 63,
+		66, 1, 0, 0, 0, 64, 62, 1, 0, 0, 0, 64, 65, 1, 0, 0, 0, 65, 1, 1, 0, 0,
+		0, 66, 64, 1, 0, 0, 0, 67, 68, 5, 10, 0, 0, 68, 69, 3, 4, 2, 0, 69, 71,
+		3, 8, 4, 0, 70, 72, 3, 10, 5, 0, 71, 70, 1, 0, 0, 0, 71, 72, 1, 0, 0, 0,
+		72, 74, 1, 0, 0, 0, 73, 75, 3, 14, 7, 0, 74, 73, 1, 0, 0, 0, 74, 75, 1,
+		0, 0, 0, 75, 3, 1, 0, 0, 0, 76, 79, 5, 25, 0, 0, 77, 79, 3, 6, 3, 0, 78,
+		76, 1, 0, 0, 0, 78, 77, 1, 0, 0, 0, 79, 84, 1, 0, 0, 0, 80, 81, 5, 53,
+		0, 0, 81, 83, 3, 6, 3, 0, 82, 80, 1, 0, 0, 0, 83, 86, 1, 0, 0, 0, 84, 82,
+		1, 0, 0, 0, 84, 85, 1, 0, 0, 0, 85, 5, 1, 0, 0, 0, 86, 84, 1, 0, 0, 0,
+		87, 92, 3, 38, 19, 0, 88, 90, 5, 18, 0, 0, 89, 88, 1, 0, 0, 0, 89, 90,
+		1, 0, 0, 0, 90, 91, 1, 0, 0, 0, 91, 93, 3, 16, 8, 0, 92, 89, 1, 0, 0, 0,
+		92, 93, 1, 0, 0, 0, 93, 102, 1, 0, 0, 0, 94, 99, 3, 26, 13, 0, 95, 97,
+		5, 18, 0, 0, 96, 95, 1, 0, 0, 0, 96, 97, 1, 0, 0, 0, 97, 98, 1, 0, 0, 0,
+		98, 100, 3, 16, 8, 0, 99, 96, 1, 0, 0, 0, 99, 100, 1, 0, 0, 0, 100, 102,
+		1, 0, 0, 0, 101, 87, 1, 0, 0, 0, 101, 94, 1, 0, 0, 0, 102, 7, 1, 0, 0,
+		0, 103, 104, 5, 11, 0, 0, 104, 107, 3, 18, 9, 0, 105, 106, 5, 12, 0, 0,
+		106, 108, 3, 20, 10, 0, 107, 105, 1, 0, 0, 0, 107, 108, 1, 0, 0, 0, 108,
+		9, 1, 0, 0, 0, 109, 113, 5, 23, 0, 0, 110, 111, 3, 12, 6, 0, 111, 112,
+		5, 53, 0, 0, 112, 114, 1, 0, 0, 0, 113, 110, 1, 0, 0, 0, 113, 114, 1, 0,
+		0, 0, 114, 115, 1, 0, 0, 0, 115, 116, 3, 12, 6, 0, 116, 11, 1, 0, 0, 0,
+		117, 118, 7, 0, 0, 0, 118, 13, 1, 0, 0, 0, 119, 120, 5, 13, 0, 0, 120,
+		121, 5, 51, 0, 0, 121, 122, 5, 49, 0, 0, 122, 123, 5, 52, 0, 0, 123, 15,
+		1, 0, 0, 0, 124, 125, 5, 63, 0, 0, 125, 17, 1, 0, 0, 0, 126, 127, 3, 16,
+		8, 0, 127, 128, 7, 1, 0, 0, 128, 19, 1, 0, 0, 0, 129, 130, 6, 10, -1, 0,
+		130, 131, 3, 22, 11, 0, 131, 138, 1, 0, 0, 0, 132, 133, 10, 2, 0, 0, 133,
+		134, 3, 34, 17, 0, 134, 135, 3, 20, 10, 3, 135, 137, 1, 0, 0, 0, 136, 132,
+		1, 0, 0, 0, 137, 140, 1, 0, 0, 0, 138, 136, 1, 0, 0, 0, 138, 139, 1, 0,
+		0, 0, 139, 21, 1, 0, 0, 0, 140, 138, 1, 0, 0, 0, 141, 142, 6, 11, -1, 0,
+		142, 143, 3, 24, 12, 0, 143, 150, 1, 0, 0, 0, 144, 145, 10, 2, 0, 0, 145,
+		146, 3, 36, 18, 0, 146, 147, 3, 22, 11, 3, 147, 149, 1, 0, 0, 0, 148, 144,
+		1, 0, 0, 0, 149, 152, 1, 0, 0, 0, 150, 148, 1, 0, 0, 0, 150, 151, 1, 0,
+		0, 0, 151, 23, 1, 0, 0, 0, 152, 150, 1, 0, 0, 0, 153, 156, 3, 40, 20, 0,
+		154, 156, 3, 32, 16, 0, 155, 153, 1, 0, 0, 0, 155, 154, 1, 0, 0, 0, 156,
+		25, 1, 0, 0, 0, 157, 158, 3, 28, 14, 0, 158, 27, 1, 0, 0, 0, 159, 160,
+		7, 2, 0, 0, 160, 162, 5, 51, 0, 0, 161, 163, 7, 3, 0, 0, 162, 161, 1, 0,
+		0, 0, 162, 163, 1, 0, 0, 0, 163, 164, 1, 0, 0, 0, 164, 165, 3, 30, 15,
+		0, 165, 166, 5, 52, 0, 0, 166, 178, 1, 0, 0, 0, 167, 168, 5, 34, 0, 0,
+		168, 174, 5, 51, 0, 0, 169, 175, 5, 25, 0, 0, 170, 172, 5, 32, 0, 0, 171,
+		170, 1, 0, 0, 0, 171, 172, 1, 0, 0, 0, 172, 173, 1, 0, 0, 0, 173, 175,
+		3, 30, 15, 0, 174, 169, 1, 0, 0, 0, 174, 171, 1, 0, 0, 0, 175, 176, 1,
+		0, 0, 0, 176, 178, 5, 52, 0, 0, 177, 159, 1, 0, 0, 0, 177, 167, 1, 0, 0,
+		0, 178, 29, 1, 0, 0, 0, 179, 184, 3, 40, 20, 0, 180, 184, 3, 38, 19, 0,
+		181, 184, 3, 26, 13, 0, 182, 184, 3, 20, 10, 0, 183, 179, 1, 0, 0, 0, 183,
+		180, 1, 0, 0, 0, 183, 181, 1, 0, 0, 0, 183, 182, 1, 0, 0, 0, 184, 31, 1,
+		0, 0, 0, 185, 186, 3, 16, 8, 0, 186, 33, 1, 0, 0, 0, 187, 195, 5, 14, 0,
+		0, 188, 189, 5, 47, 0, 0, 189, 195, 5, 47, 0, 0, 190, 195, 5, 19, 0, 0,
+		191, 195, 5, 17, 0, 0, 192, 193, 5, 46, 0, 0, 193, 195, 5, 46, 0, 0, 194,
+		187, 1, 0, 0, 0, 194, 188, 1, 0, 0, 0, 194, 190, 1, 0, 0, 0, 194, 191,
+		1, 0, 0, 0, 194, 192, 1, 0, 0, 0, 195, 35, 1, 0, 0, 0, 196, 211, 5, 41,
+		0, 0, 197, 211, 5, 42, 0, 0, 198, 211, 5, 43, 0, 0, 199, 200, 5, 43, 0,
+		0, 200, 211, 5, 41, 0, 0, 201, 202, 5, 42, 0, 0, 202, 211, 5, 41, 0, 0,
+		203, 204, 5, 43, 0, 0, 204, 211, 5, 42, 0, 0, 205, 206, 5, 44, 0, 0, 206,
+		211, 5, 41, 0, 0, 207, 208, 5, 43, 0, 0, 208, 209, 5, 41, 0, 0, 209, 211,
+		5, 42, 0, 0, 210, 196, 1, 0, 0, 0, 210, 197, 1, 0, 0, 0, 210, 198, 1, 0,
+		0, 0, 210, 199, 1, 0, 0, 0, 210, 201, 1, 0, 0, 0, 210, 203, 1, 0, 0, 0,
+		210, 205, 1, 0, 0, 0, 210, 207, 1, 0, 0, 0, 211, 37, 1, 0, 0, 0, 212, 213,
+		3, 16, 8, 0, 213, 39, 1, 0, 0, 0, 214, 224, 3, 42, 21, 0, 215, 224, 3,
+		44, 22, 0, 216, 217, 5, 29, 0, 0, 217, 224, 3, 44, 22, 0, 218, 224, 3,
+		46, 23, 0, 219, 221, 5, 24, 0, 0, 220, 219, 1, 0, 0, 0, 220, 221, 1, 0,
+		0, 0, 221, 222, 1, 0, 0, 0, 222, 224, 7, 4, 0, 0, 223, 214, 1, 0, 0, 0,
+		223, 215, 1, 0, 0, 0, 223, 216, 1, 0, 0, 0, 223, 218, 1, 0, 0, 0, 223,
+		220, 1, 0, 0, 0, 224, 41, 1, 0, 0, 0, 225, 226, 5, 66, 0, 0, 226, 43, 1,
+		0, 0, 0, 227, 228, 7, 5, 0, 0, 228, 45, 1, 0, 0, 0, 229, 230, 7, 6, 0,
+		0, 230, 47, 1, 0, 0, 0, 231, 232, 5, 54, 0, 0, 232, 49, 1, 0, 0, 0, 28,
+		52, 55, 59, 62, 64, 71, 74, 78, 84, 89, 92, 96, 99, 101, 107, 113, 138,
+		150, 155, 162, 171, 174, 177, 183, 194, 210, 220, 223,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -215,63 +239,75 @@ const (
 	TsSqlParserMINUS              = 29
 	TsSqlParserDIV                = 30
 	TsSqlParserMOD                = 31
-	TsSqlParserEQUAL_SYMBOL       = 32
-	TsSqlParserGREATER_SYMBOL     = 33
-	TsSqlParserLESS_SYMBOL        = 34
-	TsSqlParserEXCLAMATION_SYMBOL = 35
-	TsSqlParserBIT_NOT_OP         = 36
-	TsSqlParserBIT_OR_OP          = 37
-	TsSqlParserBIT_AND_OP         = 38
-	TsSqlParserBIT_XOR_OP         = 39
-	TsSqlParserTIME_INTERVAL      = 40
-	TsSqlParserDOT                = 41
-	TsSqlParserLR_BRACKET         = 42
-	TsSqlParserRR_BRACKET         = 43
-	TsSqlParserCOMMA              = 44
-	TsSqlParserSEMI               = 45
-	TsSqlParserAT_SIGN            = 46
-	TsSqlParserZERO_DECIMAL       = 47
-	TsSqlParserONE_DECIMAL        = 48
-	TsSqlParserTWO_DECIMAL        = 49
-	TsSqlParserSINGLE_QUOTE_SYMB  = 50
-	TsSqlParserDOUBLE_QUOTE_SYMB  = 51
-	TsSqlParserREVERSE_QUOTE_SYMB = 52
-	TsSqlParserCOLON_SYMB         = 53
-	TsSqlParserID                 = 54
-	TsSqlParserNULL_LITERAL       = 55
-	TsSqlParserNULL_SPEC_LITERAL  = 56
-	TsSqlParserSTRING_LITERAL     = 57
-	TsSqlParserPROPERTY           = 58
-	TsSqlParserSERVICE            = 59
-	TsSqlParserDECIMAL_LITERAL    = 60
-	TsSqlParserREAL_LITERAL       = 61
-	TsSqlParserERROR_RECONGNIGION = 62
+	TsSqlParserALL                = 32
+	TsSqlParserAVG                = 33
+	TsSqlParserCOUNT              = 34
+	TsSqlParserMAX                = 35
+	TsSqlParserMIN                = 36
+	TsSqlParserSUM                = 37
+	TsSqlParserSTD                = 38
+	TsSqlParserSTDDEV             = 39
+	TsSqlParserDISTINCT           = 40
+	TsSqlParserEQUAL_SYMBOL       = 41
+	TsSqlParserGREATER_SYMBOL     = 42
+	TsSqlParserLESS_SYMBOL        = 43
+	TsSqlParserEXCLAMATION_SYMBOL = 44
+	TsSqlParserBIT_NOT_OP         = 45
+	TsSqlParserBIT_OR_OP          = 46
+	TsSqlParserBIT_AND_OP         = 47
+	TsSqlParserBIT_XOR_OP         = 48
+	TsSqlParserTIME_INTERVAL      = 49
+	TsSqlParserDOT                = 50
+	TsSqlParserLR_BRACKET         = 51
+	TsSqlParserRR_BRACKET         = 52
+	TsSqlParserCOMMA              = 53
+	TsSqlParserSEMI               = 54
+	TsSqlParserAT_SIGN            = 55
+	TsSqlParserZERO_DECIMAL       = 56
+	TsSqlParserONE_DECIMAL        = 57
+	TsSqlParserTWO_DECIMAL        = 58
+	TsSqlParserSINGLE_QUOTE_SYMB  = 59
+	TsSqlParserDOUBLE_QUOTE_SYMB  = 60
+	TsSqlParserREVERSE_QUOTE_SYMB = 61
+	TsSqlParserCOLON_SYMB         = 62
+	TsSqlParserID                 = 63
+	TsSqlParserNULL_LITERAL       = 64
+	TsSqlParserNULL_SPEC_LITERAL  = 65
+	TsSqlParserSTRING_LITERAL     = 66
+	TsSqlParserPROPERTY           = 67
+	TsSqlParserSERVICE            = 68
+	TsSqlParserDECIMAL_LITERAL    = 69
+	TsSqlParserREAL_LITERAL       = 70
+	TsSqlParserERROR_RECONGNIGION = 71
 )
 
 // TsSqlParser rules.
 const (
-	TsSqlParserRULE_root               = 0
-	TsSqlParserRULE_selectStmt         = 1
-	TsSqlParserRULE_selectElements     = 2
-	TsSqlParserRULE_selectElement      = 3
-	TsSqlParserRULE_fromClause         = 4
-	TsSqlParserRULE_limitClause        = 5
-	TsSqlParserRULE_limitClauseAtom    = 6
-	TsSqlParserRULE_windowClause       = 7
-	TsSqlParserRULE_uid                = 8
-	TsSqlParserRULE_tableName          = 9
-	TsSqlParserRULE_expression         = 10
-	TsSqlParserRULE_predicate          = 11
-	TsSqlParserRULE_expressionAtom     = 12
-	TsSqlParserRULE_columnName         = 13
-	TsSqlParserRULE_logicalOperator    = 14
-	TsSqlParserRULE_comparisonOperator = 15
-	TsSqlParserRULE_fullColumnName     = 16
-	TsSqlParserRULE_constant           = 17
-	TsSqlParserRULE_stringLiteral      = 18
-	TsSqlParserRULE_decimalLiteral     = 19
-	TsSqlParserRULE_booleanLiteral     = 20
-	TsSqlParserRULE_emptyStatement_    = 21
+	TsSqlParserRULE_root                      = 0
+	TsSqlParserRULE_selectStmt                = 1
+	TsSqlParserRULE_selectElements            = 2
+	TsSqlParserRULE_selectElement             = 3
+	TsSqlParserRULE_fromClause                = 4
+	TsSqlParserRULE_limitClause               = 5
+	TsSqlParserRULE_limitClauseAtom           = 6
+	TsSqlParserRULE_windowClause              = 7
+	TsSqlParserRULE_uid                       = 8
+	TsSqlParserRULE_tableName                 = 9
+	TsSqlParserRULE_expression                = 10
+	TsSqlParserRULE_predicate                 = 11
+	TsSqlParserRULE_expressionAtom            = 12
+	TsSqlParserRULE_functionCall              = 13
+	TsSqlParserRULE_aggregateWindowedFunction = 14
+	TsSqlParserRULE_functionArg               = 15
+	TsSqlParserRULE_columnName                = 16
+	TsSqlParserRULE_logicalOperator           = 17
+	TsSqlParserRULE_comparisonOperator        = 18
+	TsSqlParserRULE_fullColumnName            = 19
+	TsSqlParserRULE_constant                  = 20
+	TsSqlParserRULE_stringLiteral             = 21
+	TsSqlParserRULE_decimalLiteral            = 22
+	TsSqlParserRULE_booleanLiteral            = 23
+	TsSqlParserRULE_emptyStatement_           = 24
 )
 
 // IRootContext is an interface to support dynamic dispatch.
@@ -457,21 +493,21 @@ func (p *TsSqlParser) Root() (localctx IRootContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(49)
+	p.SetState(55)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case TsSqlParserSELECT:
 		{
-			p.SetState(44)
+			p.SetState(50)
 			p.SelectStmt()
 		}
-		p.SetState(46)
+		p.SetState(52)
 		p.GetErrorHandler().Sync(p)
 
 		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 0, p.GetParserRuleContext()) == 1 {
 			{
-				p.SetState(45)
+				p.SetState(51)
 				p.Match(TsSqlParserSEMI)
 			}
 
@@ -479,33 +515,33 @@ func (p *TsSqlParser) Root() (localctx IRootContext) {
 
 	case TsSqlParserSEMI:
 		{
-			p.SetState(48)
+			p.SetState(54)
 			p.EmptyStatement_()
 		}
 
 	default:
 		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 	}
-	p.SetState(58)
+	p.SetState(64)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == TsSqlParserSELECT || _la == TsSqlParserSEMI {
-		p.SetState(56)
+		p.SetState(62)
 		p.GetErrorHandler().Sync(p)
 
 		switch p.GetTokenStream().LA(1) {
 		case TsSqlParserSELECT:
 			{
-				p.SetState(51)
+				p.SetState(57)
 				p.SelectStmt()
 			}
-			p.SetState(53)
+			p.SetState(59)
 			p.GetErrorHandler().Sync(p)
 
 			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 2, p.GetParserRuleContext()) == 1 {
 				{
-					p.SetState(52)
+					p.SetState(58)
 					p.Match(TsSqlParserSEMI)
 				}
 
@@ -513,7 +549,7 @@ func (p *TsSqlParser) Root() (localctx IRootContext) {
 
 		case TsSqlParserSEMI:
 			{
-				p.SetState(55)
+				p.SetState(61)
 				p.EmptyStatement_()
 			}
 
@@ -521,7 +557,7 @@ func (p *TsSqlParser) Root() (localctx IRootContext) {
 			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 		}
 
-		p.SetState(60)
+		p.SetState(66)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
@@ -691,35 +727,35 @@ func (p *TsSqlParser) SelectStmt() (localctx ISelectStmtContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(61)
+		p.SetState(67)
 		p.Match(TsSqlParserSELECT)
 	}
 	{
-		p.SetState(62)
+		p.SetState(68)
 		p.SelectElements()
 	}
 	{
-		p.SetState(63)
+		p.SetState(69)
 		p.FromClause()
 	}
-	p.SetState(65)
+	p.SetState(71)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == TsSqlParserLIMIT {
 		{
-			p.SetState(64)
+			p.SetState(70)
 			p.LimitClause()
 		}
 
 	}
-	p.SetState(68)
+	p.SetState(74)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == TsSqlParserINTERVAL {
 		{
-			p.SetState(67)
+			p.SetState(73)
 			p.WindowClause()
 		}
 
@@ -885,43 +921,43 @@ func (p *TsSqlParser) SelectElements() (localctx ISelectElementsContext) {
 	}()
 
 	p.EnterOuterAlt(localctx, 1)
-	p.SetState(72)
+	p.SetState(78)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case TsSqlParserSTAR:
 		{
-			p.SetState(70)
+			p.SetState(76)
 
 			var _m = p.Match(TsSqlParserSTAR)
 
 			localctx.(*SelectElementsContext).star = _m
 		}
 
-	case TsSqlParserID:
+	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserID:
 		{
-			p.SetState(71)
+			p.SetState(77)
 			p.SelectElement()
 		}
 
 	default:
 		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 	}
-	p.SetState(78)
+	p.SetState(84)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == TsSqlParserCOMMA {
 		{
-			p.SetState(74)
+			p.SetState(80)
 			p.Match(TsSqlParserCOMMA)
 		}
 		{
-			p.SetState(75)
+			p.SetState(81)
 			p.SelectElement()
 		}
 
-		p.SetState(80)
+		p.SetState(86)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 	}
@@ -967,10 +1003,40 @@ func NewSelectElementContext(parser antlr.Parser, parent antlr.ParserRuleContext
 
 func (s *SelectElementContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *SelectElementContext) FullColumnName() IFullColumnNameContext {
+func (s *SelectElementContext) CopyFrom(ctx *SelectElementContext) {
+	s.BaseParserRuleContext.CopyFrom(ctx.BaseParserRuleContext)
+}
+
+func (s *SelectElementContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *SelectElementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+type SelectFunctionElementContext struct {
+	*SelectElementContext
+}
+
+func NewSelectFunctionElementContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SelectFunctionElementContext {
+	var p = new(SelectFunctionElementContext)
+
+	p.SelectElementContext = NewEmptySelectElementContext()
+	p.parser = parser
+	p.CopyFrom(ctx.(*SelectElementContext))
+
+	return p
+}
+
+func (s *SelectFunctionElementContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *SelectFunctionElementContext) FunctionCall() IFunctionCallContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IFullColumnNameContext); ok {
+		if _, ok := ctx.(IFunctionCallContext); ok {
 			t = ctx.(antlr.RuleContext)
 			break
 		}
@@ -980,10 +1046,10 @@ func (s *SelectElementContext) FullColumnName() IFullColumnNameContext {
 		return nil
 	}
 
-	return t.(IFullColumnNameContext)
+	return t.(IFunctionCallContext)
 }
 
-func (s *SelectElementContext) Uid() IUidContext {
+func (s *SelectFunctionElementContext) Uid() IUidContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
 		if _, ok := ctx.(IUidContext); ok {
@@ -999,34 +1065,102 @@ func (s *SelectElementContext) Uid() IUidContext {
 	return t.(IUidContext)
 }
 
-func (s *SelectElementContext) AS() antlr.TerminalNode {
+func (s *SelectFunctionElementContext) AS() antlr.TerminalNode {
 	return s.GetToken(TsSqlParserAS, 0)
 }
 
-func (s *SelectElementContext) GetRuleContext() antlr.RuleContext {
+func (s *SelectFunctionElementContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.EnterSelectFunctionElement(s)
+	}
+}
+
+func (s *SelectFunctionElementContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.ExitSelectFunctionElement(s)
+	}
+}
+
+func (s *SelectFunctionElementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TsSqlParserVisitor:
+		return t.VisitSelectFunctionElement(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+type SelectColumnElementContext struct {
+	*SelectElementContext
+}
+
+func NewSelectColumnElementContext(parser antlr.Parser, ctx antlr.ParserRuleContext) *SelectColumnElementContext {
+	var p = new(SelectColumnElementContext)
+
+	p.SelectElementContext = NewEmptySelectElementContext()
+	p.parser = parser
+	p.CopyFrom(ctx.(*SelectElementContext))
+
+	return p
+}
+
+func (s *SelectColumnElementContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *SelectElementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
+func (s *SelectColumnElementContext) FullColumnName() IFullColumnNameContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFullColumnNameContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFullColumnNameContext)
 }
 
-func (s *SelectElementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *SelectColumnElementContext) Uid() IUidContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IUidContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IUidContext)
+}
+
+func (s *SelectColumnElementContext) AS() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserAS, 0)
+}
+
+func (s *SelectColumnElementContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(TsSqlParserListener); ok {
-		listenerT.EnterSelectElement(s)
+		listenerT.EnterSelectColumnElement(s)
 	}
 }
 
-func (s *SelectElementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *SelectColumnElementContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(TsSqlParserListener); ok {
-		listenerT.ExitSelectElement(s)
+		listenerT.ExitSelectColumnElement(s)
 	}
 }
 
-func (s *SelectElementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+func (s *SelectColumnElementContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
 	switch t := visitor.(type) {
 	case TsSqlParserVisitor:
-		return t.VisitSelectElement(s)
+		return t.VisitSelectColumnElement(s)
 
 	default:
 		return t.VisitChildren(s)
@@ -1057,32 +1191,72 @@ func (p *TsSqlParser) SelectElement() (localctx ISelectElementContext) {
 		}
 	}()
 
-	p.EnterOuterAlt(localctx, 1)
-	{
-		p.SetState(81)
-		p.FullColumnName()
-	}
-	p.SetState(86)
+	p.SetState(101)
 	p.GetErrorHandler().Sync(p)
-	_la = p.GetTokenStream().LA(1)
 
-	if _la == TsSqlParserAS || _la == TsSqlParserID {
-		p.SetState(83)
+	switch p.GetTokenStream().LA(1) {
+	case TsSqlParserID:
+		localctx = NewSelectColumnElementContext(p, localctx)
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(87)
+			p.FullColumnName()
+		}
+		p.SetState(92)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
-		if _la == TsSqlParserAS {
+		if _la == TsSqlParserAS || _la == TsSqlParserID {
+			p.SetState(89)
+			p.GetErrorHandler().Sync(p)
+			_la = p.GetTokenStream().LA(1)
+
+			if _la == TsSqlParserAS {
+				{
+					p.SetState(88)
+					p.Match(TsSqlParserAS)
+				}
+
+			}
 			{
-				p.SetState(82)
-				p.Match(TsSqlParserAS)
+				p.SetState(91)
+				p.Uid()
 			}
 
 		}
+
+	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM:
+		localctx = NewSelectFunctionElementContext(p, localctx)
+		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(85)
-			p.Uid()
+			p.SetState(94)
+			p.FunctionCall()
+		}
+		p.SetState(99)
+		p.GetErrorHandler().Sync(p)
+		_la = p.GetTokenStream().LA(1)
+
+		if _la == TsSqlParserAS || _la == TsSqlParserID {
+			p.SetState(96)
+			p.GetErrorHandler().Sync(p)
+			_la = p.GetTokenStream().LA(1)
+
+			if _la == TsSqlParserAS {
+				{
+					p.SetState(95)
+					p.Match(TsSqlParserAS)
+				}
+
+			}
+			{
+				p.SetState(98)
+				p.Uid()
+			}
+
 		}
 
+	default:
+		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 	}
 
 	return localctx
@@ -1222,24 +1396,24 @@ func (p *TsSqlParser) FromClause() (localctx IFromClauseContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(88)
+		p.SetState(103)
 		p.Match(TsSqlParserFROM)
 	}
 	{
-		p.SetState(89)
+		p.SetState(104)
 		p.TableName()
 	}
-	p.SetState(92)
+	p.SetState(107)
 	p.GetErrorHandler().Sync(p)
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == TsSqlParserWHERE {
 		{
-			p.SetState(90)
+			p.SetState(105)
 			p.Match(TsSqlParserWHERE)
 		}
 		{
-			p.SetState(91)
+			p.SetState(106)
 			p.expression(0)
 		}
 
@@ -1412,28 +1586,28 @@ func (p *TsSqlParser) LimitClause() (localctx ILimitClauseContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(94)
+		p.SetState(109)
 		p.Match(TsSqlParserLIMIT)
 	}
-	p.SetState(98)
+	p.SetState(113)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 12, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 15, p.GetParserRuleContext()) == 1 {
 		{
-			p.SetState(95)
+			p.SetState(110)
 
 			var _x = p.LimitClauseAtom()
 
 			localctx.(*LimitClauseContext).offset = _x
 		}
 		{
-			p.SetState(96)
+			p.SetState(111)
 			p.Match(TsSqlParserCOMMA)
 		}
 
 	}
 	{
-		p.SetState(100)
+		p.SetState(115)
 
 		var _x = p.LimitClauseAtom()
 
@@ -1553,10 +1727,10 @@ func (p *TsSqlParser) LimitClauseAtom() (localctx ILimitClauseAtomContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(102)
+		p.SetState(117)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&1153906667025334272) != 0) {
+		if !((int64((_la-56)) & ^0x3f) == 0 && ((int64(1)<<(_la-56))&8199) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -1676,19 +1850,19 @@ func (p *TsSqlParser) WindowClause() (localctx IWindowClauseContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(104)
+		p.SetState(119)
 		p.Match(TsSqlParserINTERVAL)
 	}
 	{
-		p.SetState(105)
+		p.SetState(120)
 		p.Match(TsSqlParserLR_BRACKET)
 	}
 	{
-		p.SetState(106)
+		p.SetState(121)
 		p.Match(TsSqlParserTIME_INTERVAL)
 	}
 	{
-		p.SetState(107)
+		p.SetState(122)
 		p.Match(TsSqlParserRR_BRACKET)
 	}
 
@@ -1792,7 +1966,7 @@ func (p *TsSqlParser) Uid() (localctx IUidContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(109)
+		p.SetState(124)
 		p.Match(TsSqlParserID)
 	}
 
@@ -1921,11 +2095,11 @@ func (p *TsSqlParser) TableName() (localctx ITableNameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(111)
+		p.SetState(126)
 		p.Uid()
 	}
 	{
-		p.SetState(112)
+		p.SetState(127)
 		_la = p.GetTokenStream().LA(1)
 
 		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&224) != 0) {
@@ -2192,14 +2366,14 @@ func (p *TsSqlParser) expression(_p int) (localctx IExpressionContext) {
 	_prevctx = localctx
 
 	{
-		p.SetState(115)
+		p.SetState(130)
 		p.predicate(0)
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(123)
+	p.SetState(138)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 13, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 16, p.GetParserRuleContext())
 
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
@@ -2211,17 +2385,17 @@ func (p *TsSqlParser) expression(_p int) (localctx IExpressionContext) {
 			localctx.(*LogicalExpressionContext).left = _prevctx
 
 			p.PushNewRecursionContext(localctx, _startState, TsSqlParserRULE_expression)
-			p.SetState(117)
+			p.SetState(132)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 2)) {
 				panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
 			}
 			{
-				p.SetState(118)
+				p.SetState(133)
 				p.LogicalOperator()
 			}
 			{
-				p.SetState(119)
+				p.SetState(134)
 
 				var _x = p.expression(3)
 
@@ -2229,9 +2403,9 @@ func (p *TsSqlParser) expression(_p int) (localctx IExpressionContext) {
 			}
 
 		}
-		p.SetState(125)
+		p.SetState(140)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 13, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 16, p.GetParserRuleContext())
 	}
 
 	return localctx
@@ -2490,14 +2664,14 @@ func (p *TsSqlParser) predicate(_p int) (localctx IPredicateContext) {
 	_prevctx = localctx
 
 	{
-		p.SetState(127)
+		p.SetState(142)
 		p.ExpressionAtom()
 	}
 
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
-	p.SetState(135)
+	p.SetState(150)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 14, p.GetParserRuleContext())
+	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 17, p.GetParserRuleContext())
 
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
@@ -2509,17 +2683,17 @@ func (p *TsSqlParser) predicate(_p int) (localctx IPredicateContext) {
 			localctx.(*BinaryComparisonPredicateContext).left = _prevctx
 
 			p.PushNewRecursionContext(localctx, _startState, TsSqlParserRULE_predicate)
-			p.SetState(129)
+			p.SetState(144)
 
 			if !(p.Precpred(p.GetParserRuleContext(), 2)) {
 				panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 2)", ""))
 			}
 			{
-				p.SetState(130)
+				p.SetState(145)
 				p.ComparisonOperator()
 			}
 			{
-				p.SetState(131)
+				p.SetState(146)
 
 				var _x = p.predicate(3)
 
@@ -2527,9 +2701,9 @@ func (p *TsSqlParser) predicate(_p int) (localctx IPredicateContext) {
 			}
 
 		}
-		p.SetState(137)
+		p.SetState(152)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 14, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 17, p.GetParserRuleContext())
 	}
 
 	return localctx
@@ -2720,7 +2894,7 @@ func (p *TsSqlParser) ExpressionAtom() (localctx IExpressionAtomContext) {
 		}
 	}()
 
-	p.SetState(140)
+	p.SetState(155)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
@@ -2728,7 +2902,7 @@ func (p *TsSqlParser) ExpressionAtom() (localctx IExpressionAtomContext) {
 		localctx = NewConstantExpressionAtomContext(p, localctx)
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(138)
+			p.SetState(153)
 			p.Constant()
 		}
 
@@ -2736,12 +2910,602 @@ func (p *TsSqlParser) ExpressionAtom() (localctx IExpressionAtomContext) {
 		localctx = NewColumnNameExpressionAtomContext(p, localctx)
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(139)
+			p.SetState(154)
 			p.ColumnName()
 		}
 
 	default:
 		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+	}
+
+	return localctx
+}
+
+// IFunctionCallContext is an interface to support dynamic dispatch.
+type IFunctionCallContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsFunctionCallContext differentiates from other interfaces.
+	IsFunctionCallContext()
+}
+
+type FunctionCallContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyFunctionCallContext() *FunctionCallContext {
+	var p = new(FunctionCallContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = TsSqlParserRULE_functionCall
+	return p
+}
+
+func (*FunctionCallContext) IsFunctionCallContext() {}
+
+func NewFunctionCallContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FunctionCallContext {
+	var p = new(FunctionCallContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TsSqlParserRULE_functionCall
+
+	return p
+}
+
+func (s *FunctionCallContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FunctionCallContext) AggregateWindowedFunction() IAggregateWindowedFunctionContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IAggregateWindowedFunctionContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IAggregateWindowedFunctionContext)
+}
+
+func (s *FunctionCallContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *FunctionCallContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *FunctionCallContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.EnterFunctionCall(s)
+	}
+}
+
+func (s *FunctionCallContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.ExitFunctionCall(s)
+	}
+}
+
+func (s *FunctionCallContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TsSqlParserVisitor:
+		return t.VisitFunctionCall(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TsSqlParser) FunctionCall() (localctx IFunctionCallContext) {
+	this := p
+	_ = this
+
+	localctx = NewFunctionCallContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 26, TsSqlParserRULE_functionCall)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	{
+		p.SetState(157)
+		p.AggregateWindowedFunction()
+	}
+
+	return localctx
+}
+
+// IAggregateWindowedFunctionContext is an interface to support dynamic dispatch.
+type IAggregateWindowedFunctionContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// GetAggregator returns the aggregator token.
+	GetAggregator() antlr.Token
+
+	// GetStarArg returns the starArg token.
+	GetStarArg() antlr.Token
+
+	// SetAggregator sets the aggregator token.
+	SetAggregator(antlr.Token)
+
+	// SetStarArg sets the starArg token.
+	SetStarArg(antlr.Token)
+
+	// IsAggregateWindowedFunctionContext differentiates from other interfaces.
+	IsAggregateWindowedFunctionContext()
+}
+
+type AggregateWindowedFunctionContext struct {
+	*antlr.BaseParserRuleContext
+	parser     antlr.Parser
+	aggregator antlr.Token
+	starArg    antlr.Token
+}
+
+func NewEmptyAggregateWindowedFunctionContext() *AggregateWindowedFunctionContext {
+	var p = new(AggregateWindowedFunctionContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = TsSqlParserRULE_aggregateWindowedFunction
+	return p
+}
+
+func (*AggregateWindowedFunctionContext) IsAggregateWindowedFunctionContext() {}
+
+func NewAggregateWindowedFunctionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AggregateWindowedFunctionContext {
+	var p = new(AggregateWindowedFunctionContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TsSqlParserRULE_aggregateWindowedFunction
+
+	return p
+}
+
+func (s *AggregateWindowedFunctionContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *AggregateWindowedFunctionContext) GetAggregator() antlr.Token { return s.aggregator }
+
+func (s *AggregateWindowedFunctionContext) GetStarArg() antlr.Token { return s.starArg }
+
+func (s *AggregateWindowedFunctionContext) SetAggregator(v antlr.Token) { s.aggregator = v }
+
+func (s *AggregateWindowedFunctionContext) SetStarArg(v antlr.Token) { s.starArg = v }
+
+func (s *AggregateWindowedFunctionContext) LR_BRACKET() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserLR_BRACKET, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) FunctionArg() IFunctionArgContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFunctionArgContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFunctionArgContext)
+}
+
+func (s *AggregateWindowedFunctionContext) RR_BRACKET() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserRR_BRACKET, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) AVG() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserAVG, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) MAX() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserMAX, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) MIN() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserMIN, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) SUM() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserSUM, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) ALL() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserALL, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) DISTINCT() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserDISTINCT, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) COUNT() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserCOUNT, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) STAR() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserSTAR, 0)
+}
+
+func (s *AggregateWindowedFunctionContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *AggregateWindowedFunctionContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *AggregateWindowedFunctionContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.EnterAggregateWindowedFunction(s)
+	}
+}
+
+func (s *AggregateWindowedFunctionContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.ExitAggregateWindowedFunction(s)
+	}
+}
+
+func (s *AggregateWindowedFunctionContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TsSqlParserVisitor:
+		return t.VisitAggregateWindowedFunction(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TsSqlParser) AggregateWindowedFunction() (localctx IAggregateWindowedFunctionContext) {
+	this := p
+	_ = this
+
+	localctx = NewAggregateWindowedFunctionContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 28, TsSqlParserRULE_aggregateWindowedFunction)
+	var _la int
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.SetState(177)
+	p.GetErrorHandler().Sync(p)
+
+	switch p.GetTokenStream().LA(1) {
+	case TsSqlParserAVG, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(159)
+			_la = p.GetTokenStream().LA(1)
+
+			if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&249108103168) != 0) {
+				p.GetErrorHandler().RecoverInline(p)
+			} else {
+				p.GetErrorHandler().ReportMatch(p)
+				p.Consume()
+			}
+		}
+		{
+			p.SetState(160)
+			p.Match(TsSqlParserLR_BRACKET)
+		}
+		p.SetState(162)
+		p.GetErrorHandler().Sync(p)
+		_la = p.GetTokenStream().LA(1)
+
+		if _la == TsSqlParserALL || _la == TsSqlParserDISTINCT {
+			{
+				p.SetState(161)
+
+				var _lt = p.GetTokenStream().LT(1)
+
+				localctx.(*AggregateWindowedFunctionContext).aggregator = _lt
+
+				_la = p.GetTokenStream().LA(1)
+
+				if !(_la == TsSqlParserALL || _la == TsSqlParserDISTINCT) {
+					var _ri = p.GetErrorHandler().RecoverInline(p)
+
+					localctx.(*AggregateWindowedFunctionContext).aggregator = _ri
+				} else {
+					p.GetErrorHandler().ReportMatch(p)
+					p.Consume()
+				}
+			}
+
+		}
+		{
+			p.SetState(164)
+			p.FunctionArg()
+		}
+		{
+			p.SetState(165)
+			p.Match(TsSqlParserRR_BRACKET)
+		}
+
+	case TsSqlParserCOUNT:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(167)
+			p.Match(TsSqlParserCOUNT)
+		}
+		{
+			p.SetState(168)
+			p.Match(TsSqlParserLR_BRACKET)
+		}
+		p.SetState(174)
+		p.GetErrorHandler().Sync(p)
+
+		switch p.GetTokenStream().LA(1) {
+		case TsSqlParserSTAR:
+			{
+				p.SetState(169)
+
+				var _m = p.Match(TsSqlParserSTAR)
+
+				localctx.(*AggregateWindowedFunctionContext).starArg = _m
+			}
+
+		case TsSqlParserFALSE, TsSqlParserTRUE, TsSqlParserNOT, TsSqlParserMINUS, TsSqlParserALL, TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserZERO_DECIMAL, TsSqlParserONE_DECIMAL, TsSqlParserTWO_DECIMAL, TsSqlParserID, TsSqlParserNULL_LITERAL, TsSqlParserNULL_SPEC_LITERAL, TsSqlParserSTRING_LITERAL, TsSqlParserDECIMAL_LITERAL, TsSqlParserREAL_LITERAL:
+			p.SetState(171)
+			p.GetErrorHandler().Sync(p)
+			_la = p.GetTokenStream().LA(1)
+
+			if _la == TsSqlParserALL {
+				{
+					p.SetState(170)
+
+					var _m = p.Match(TsSqlParserALL)
+
+					localctx.(*AggregateWindowedFunctionContext).aggregator = _m
+				}
+
+			}
+			{
+				p.SetState(173)
+				p.FunctionArg()
+			}
+
+		default:
+			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		}
+		{
+			p.SetState(176)
+			p.Match(TsSqlParserRR_BRACKET)
+		}
+
+	default:
+		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+	}
+
+	return localctx
+}
+
+// IFunctionArgContext is an interface to support dynamic dispatch.
+type IFunctionArgContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsFunctionArgContext differentiates from other interfaces.
+	IsFunctionArgContext()
+}
+
+type FunctionArgContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyFunctionArgContext() *FunctionArgContext {
+	var p = new(FunctionArgContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = TsSqlParserRULE_functionArg
+	return p
+}
+
+func (*FunctionArgContext) IsFunctionArgContext() {}
+
+func NewFunctionArgContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FunctionArgContext {
+	var p = new(FunctionArgContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = TsSqlParserRULE_functionArg
+
+	return p
+}
+
+func (s *FunctionArgContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *FunctionArgContext) Constant() IConstantContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IConstantContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IConstantContext)
+}
+
+func (s *FunctionArgContext) FullColumnName() IFullColumnNameContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFullColumnNameContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFullColumnNameContext)
+}
+
+func (s *FunctionArgContext) FunctionCall() IFunctionCallContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IFunctionCallContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IFunctionCallContext)
+}
+
+func (s *FunctionArgContext) Expression() IExpressionContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IExpressionContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IExpressionContext)
+}
+
+func (s *FunctionArgContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *FunctionArgContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *FunctionArgContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.EnterFunctionArg(s)
+	}
+}
+
+func (s *FunctionArgContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(TsSqlParserListener); ok {
+		listenerT.ExitFunctionArg(s)
+	}
+}
+
+func (s *FunctionArgContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+	switch t := visitor.(type) {
+	case TsSqlParserVisitor:
+		return t.VisitFunctionArg(s)
+
+	default:
+		return t.VisitChildren(s)
+	}
+}
+
+func (p *TsSqlParser) FunctionArg() (localctx IFunctionArgContext) {
+	this := p
+	_ = this
+
+	localctx = NewFunctionArgContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 30, TsSqlParserRULE_functionArg)
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.SetState(183)
+	p.GetErrorHandler().Sync(p)
+	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 23, p.GetParserRuleContext()) {
+	case 1:
+		p.EnterOuterAlt(localctx, 1)
+		{
+			p.SetState(179)
+			p.Constant()
+		}
+
+	case 2:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(180)
+			p.FullColumnName()
+		}
+
+	case 3:
+		p.EnterOuterAlt(localctx, 3)
+		{
+			p.SetState(181)
+			p.FunctionCall()
+		}
+
+	case 4:
+		p.EnterOuterAlt(localctx, 4)
+		{
+			p.SetState(182)
+			p.expression(0)
+		}
+
 	}
 
 	return localctx
@@ -2836,7 +3600,7 @@ func (p *TsSqlParser) ColumnName() (localctx IColumnNameContext) {
 	_ = this
 
 	localctx = NewColumnNameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 26, TsSqlParserRULE_columnName)
+	p.EnterRule(localctx, 32, TsSqlParserRULE_columnName)
 
 	defer func() {
 		p.ExitRule()
@@ -2856,7 +3620,7 @@ func (p *TsSqlParser) ColumnName() (localctx IColumnNameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(142)
+		p.SetState(185)
 		p.Uid()
 	}
 
@@ -2964,7 +3728,7 @@ func (p *TsSqlParser) LogicalOperator() (localctx ILogicalOperatorContext) {
 	_ = this
 
 	localctx = NewLogicalOperatorContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 28, TsSqlParserRULE_logicalOperator)
+	p.EnterRule(localctx, 34, TsSqlParserRULE_logicalOperator)
 
 	defer func() {
 		p.ExitRule()
@@ -2982,50 +3746,50 @@ func (p *TsSqlParser) LogicalOperator() (localctx ILogicalOperatorContext) {
 		}
 	}()
 
-	p.SetState(151)
+	p.SetState(194)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case TsSqlParserAND:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(144)
+			p.SetState(187)
 			p.Match(TsSqlParserAND)
 		}
 
 	case TsSqlParserBIT_AND_OP:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(145)
+			p.SetState(188)
 			p.Match(TsSqlParserBIT_AND_OP)
 		}
 		{
-			p.SetState(146)
+			p.SetState(189)
 			p.Match(TsSqlParserBIT_AND_OP)
 		}
 
 	case TsSqlParserXOR:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(147)
+			p.SetState(190)
 			p.Match(TsSqlParserXOR)
 		}
 
 	case TsSqlParserOR:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(148)
+			p.SetState(191)
 			p.Match(TsSqlParserOR)
 		}
 
 	case TsSqlParserBIT_OR_OP:
 		p.EnterOuterAlt(localctx, 5)
 		{
-			p.SetState(149)
+			p.SetState(192)
 			p.Match(TsSqlParserBIT_OR_OP)
 		}
 		{
-			p.SetState(150)
+			p.SetState(193)
 			p.Match(TsSqlParserBIT_OR_OP)
 		}
 
@@ -3125,7 +3889,7 @@ func (p *TsSqlParser) ComparisonOperator() (localctx IComparisonOperatorContext)
 	_ = this
 
 	localctx = NewComparisonOperatorContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 30, TsSqlParserRULE_comparisonOperator)
+	p.EnterRule(localctx, 36, TsSqlParserRULE_comparisonOperator)
 
 	defer func() {
 		p.ExitRule()
@@ -3143,86 +3907,86 @@ func (p *TsSqlParser) ComparisonOperator() (localctx IComparisonOperatorContext)
 		}
 	}()
 
-	p.SetState(167)
+	p.SetState(210)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 17, p.GetParserRuleContext()) {
+	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 25, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(153)
+			p.SetState(196)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(154)
+			p.SetState(197)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 
 	case 3:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(155)
+			p.SetState(198)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 
 	case 4:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(156)
+			p.SetState(199)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 		{
-			p.SetState(157)
+			p.SetState(200)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 5:
 		p.EnterOuterAlt(localctx, 5)
 		{
-			p.SetState(158)
+			p.SetState(201)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 		{
-			p.SetState(159)
+			p.SetState(202)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 6:
 		p.EnterOuterAlt(localctx, 6)
 		{
-			p.SetState(160)
+			p.SetState(203)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 		{
-			p.SetState(161)
+			p.SetState(204)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 
 	case 7:
 		p.EnterOuterAlt(localctx, 7)
 		{
-			p.SetState(162)
+			p.SetState(205)
 			p.Match(TsSqlParserEXCLAMATION_SYMBOL)
 		}
 		{
-			p.SetState(163)
+			p.SetState(206)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 8:
 		p.EnterOuterAlt(localctx, 8)
 		{
-			p.SetState(164)
+			p.SetState(207)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 		{
-			p.SetState(165)
+			p.SetState(208)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 		{
-			p.SetState(166)
+			p.SetState(209)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 
@@ -3320,7 +4084,7 @@ func (p *TsSqlParser) FullColumnName() (localctx IFullColumnNameContext) {
 	_ = this
 
 	localctx = NewFullColumnNameContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 32, TsSqlParserRULE_fullColumnName)
+	p.EnterRule(localctx, 38, TsSqlParserRULE_fullColumnName)
 
 	defer func() {
 		p.ExitRule()
@@ -3340,7 +4104,7 @@ func (p *TsSqlParser) FullColumnName() (localctx IFullColumnNameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(169)
+		p.SetState(212)
 		p.Uid()
 	}
 
@@ -3495,7 +4259,7 @@ func (p *TsSqlParser) Constant() (localctx IConstantContext) {
 	_ = this
 
 	localctx = NewConstantContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 34, TsSqlParserRULE_constant)
+	p.EnterRule(localctx, 40, TsSqlParserRULE_constant)
 	var _la int
 
 	defer func() {
@@ -3514,57 +4278,57 @@ func (p *TsSqlParser) Constant() (localctx IConstantContext) {
 		}
 	}()
 
-	p.SetState(180)
+	p.SetState(223)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case TsSqlParserSTRING_LITERAL:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(171)
+			p.SetState(214)
 			p.StringLiteral()
 		}
 
 	case TsSqlParserZERO_DECIMAL, TsSqlParserONE_DECIMAL, TsSqlParserTWO_DECIMAL, TsSqlParserDECIMAL_LITERAL, TsSqlParserREAL_LITERAL:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(172)
+			p.SetState(215)
 			p.DecimalLiteral()
 		}
 
 	case TsSqlParserMINUS:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(173)
+			p.SetState(216)
 			p.Match(TsSqlParserMINUS)
 		}
 		{
-			p.SetState(174)
+			p.SetState(217)
 			p.DecimalLiteral()
 		}
 
 	case TsSqlParserFALSE, TsSqlParserTRUE:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(175)
+			p.SetState(218)
 			p.BooleanLiteral()
 		}
 
 	case TsSqlParserNOT, TsSqlParserNULL_LITERAL, TsSqlParserNULL_SPEC_LITERAL:
 		p.EnterOuterAlt(localctx, 5)
-		p.SetState(177)
+		p.SetState(220)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == TsSqlParserNOT {
 			{
-				p.SetState(176)
+				p.SetState(219)
 				p.Match(TsSqlParserNOT)
 			}
 
 		}
 		{
-			p.SetState(179)
+			p.SetState(222)
 
 			var _lt = p.GetTokenStream().LT(1)
 
@@ -3666,7 +4430,7 @@ func (p *TsSqlParser) StringLiteral() (localctx IStringLiteralContext) {
 	_ = this
 
 	localctx = NewStringLiteralContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 36, TsSqlParserRULE_stringLiteral)
+	p.EnterRule(localctx, 42, TsSqlParserRULE_stringLiteral)
 
 	defer func() {
 		p.ExitRule()
@@ -3686,7 +4450,7 @@ func (p *TsSqlParser) StringLiteral() (localctx IStringLiteralContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(182)
+		p.SetState(225)
 		p.Match(TsSqlParserSTRING_LITERAL)
 	}
 
@@ -3786,7 +4550,7 @@ func (p *TsSqlParser) DecimalLiteral() (localctx IDecimalLiteralContext) {
 	_ = this
 
 	localctx = NewDecimalLiteralContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 38, TsSqlParserRULE_decimalLiteral)
+	p.EnterRule(localctx, 44, TsSqlParserRULE_decimalLiteral)
 	var _la int
 
 	defer func() {
@@ -3807,10 +4571,10 @@ func (p *TsSqlParser) DecimalLiteral() (localctx IDecimalLiteralContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(184)
+		p.SetState(227)
 		_la = p.GetTokenStream().LA(1)
 
-		if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&3459749676239028224) != 0) {
+		if !((int64((_la-56)) & ^0x3f) == 0 && ((int64(1)<<(_la-56))&24583) != 0) {
 			p.GetErrorHandler().RecoverInline(p)
 		} else {
 			p.GetErrorHandler().ReportMatch(p)
@@ -3902,7 +4666,7 @@ func (p *TsSqlParser) BooleanLiteral() (localctx IBooleanLiteralContext) {
 	_ = this
 
 	localctx = NewBooleanLiteralContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 40, TsSqlParserRULE_booleanLiteral)
+	p.EnterRule(localctx, 46, TsSqlParserRULE_booleanLiteral)
 	var _la int
 
 	defer func() {
@@ -3923,7 +4687,7 @@ func (p *TsSqlParser) BooleanLiteral() (localctx IBooleanLiteralContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(186)
+		p.SetState(229)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(_la == TsSqlParserFALSE || _la == TsSqlParserTRUE) {
@@ -4014,7 +4778,7 @@ func (p *TsSqlParser) EmptyStatement_() (localctx IEmptyStatement_Context) {
 	_ = this
 
 	localctx = NewEmptyStatement_Context(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 42, TsSqlParserRULE_emptyStatement_)
+	p.EnterRule(localctx, 48, TsSqlParserRULE_emptyStatement_)
 
 	defer func() {
 		p.ExitRule()
@@ -4034,7 +4798,7 @@ func (p *TsSqlParser) EmptyStatement_() (localctx IEmptyStatement_Context) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(188)
+		p.SetState(231)
 		p.Match(TsSqlParserSEMI)
 	}
 

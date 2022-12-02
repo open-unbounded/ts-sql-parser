@@ -17,8 +17,11 @@ type TsSqlParserListener interface {
 	// EnterSelectElements is called when entering the selectElements production.
 	EnterSelectElements(c *SelectElementsContext)
 
-	// EnterSelectElement is called when entering the selectElement production.
-	EnterSelectElement(c *SelectElementContext)
+	// EnterSelectColumnElement is called when entering the selectColumnElement production.
+	EnterSelectColumnElement(c *SelectColumnElementContext)
+
+	// EnterSelectFunctionElement is called when entering the selectFunctionElement production.
+	EnterSelectFunctionElement(c *SelectFunctionElementContext)
 
 	// EnterFromClause is called when entering the fromClause production.
 	EnterFromClause(c *FromClauseContext)
@@ -56,6 +59,15 @@ type TsSqlParserListener interface {
 	// EnterColumnNameExpressionAtom is called when entering the columnNameExpressionAtom production.
 	EnterColumnNameExpressionAtom(c *ColumnNameExpressionAtomContext)
 
+	// EnterFunctionCall is called when entering the functionCall production.
+	EnterFunctionCall(c *FunctionCallContext)
+
+	// EnterAggregateWindowedFunction is called when entering the aggregateWindowedFunction production.
+	EnterAggregateWindowedFunction(c *AggregateWindowedFunctionContext)
+
+	// EnterFunctionArg is called when entering the functionArg production.
+	EnterFunctionArg(c *FunctionArgContext)
+
 	// EnterColumnName is called when entering the columnName production.
 	EnterColumnName(c *ColumnNameContext)
 
@@ -92,8 +104,11 @@ type TsSqlParserListener interface {
 	// ExitSelectElements is called when exiting the selectElements production.
 	ExitSelectElements(c *SelectElementsContext)
 
-	// ExitSelectElement is called when exiting the selectElement production.
-	ExitSelectElement(c *SelectElementContext)
+	// ExitSelectColumnElement is called when exiting the selectColumnElement production.
+	ExitSelectColumnElement(c *SelectColumnElementContext)
+
+	// ExitSelectFunctionElement is called when exiting the selectFunctionElement production.
+	ExitSelectFunctionElement(c *SelectFunctionElementContext)
 
 	// ExitFromClause is called when exiting the fromClause production.
 	ExitFromClause(c *FromClauseContext)
@@ -130,6 +145,15 @@ type TsSqlParserListener interface {
 
 	// ExitColumnNameExpressionAtom is called when exiting the columnNameExpressionAtom production.
 	ExitColumnNameExpressionAtom(c *ColumnNameExpressionAtomContext)
+
+	// ExitFunctionCall is called when exiting the functionCall production.
+	ExitFunctionCall(c *FunctionCallContext)
+
+	// ExitAggregateWindowedFunction is called when exiting the aggregateWindowedFunction production.
+	ExitAggregateWindowedFunction(c *AggregateWindowedFunctionContext)
+
+	// ExitFunctionArg is called when exiting the functionArg production.
+	ExitFunctionArg(c *FunctionArgContext)
 
 	// ExitColumnName is called when exiting the columnName production.
 	ExitColumnName(c *ColumnNameContext)

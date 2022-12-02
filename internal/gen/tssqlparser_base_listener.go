@@ -39,11 +39,17 @@ func (s *BaseTsSqlParserListener) EnterSelectElements(ctx *SelectElementsContext
 // ExitSelectElements is called when production selectElements is exited.
 func (s *BaseTsSqlParserListener) ExitSelectElements(ctx *SelectElementsContext) {}
 
-// EnterSelectElement is called when production selectElement is entered.
-func (s *BaseTsSqlParserListener) EnterSelectElement(ctx *SelectElementContext) {}
+// EnterSelectColumnElement is called when production selectColumnElement is entered.
+func (s *BaseTsSqlParserListener) EnterSelectColumnElement(ctx *SelectColumnElementContext) {}
 
-// ExitSelectElement is called when production selectElement is exited.
-func (s *BaseTsSqlParserListener) ExitSelectElement(ctx *SelectElementContext) {}
+// ExitSelectColumnElement is called when production selectColumnElement is exited.
+func (s *BaseTsSqlParserListener) ExitSelectColumnElement(ctx *SelectColumnElementContext) {}
+
+// EnterSelectFunctionElement is called when production selectFunctionElement is entered.
+func (s *BaseTsSqlParserListener) EnterSelectFunctionElement(ctx *SelectFunctionElementContext) {}
+
+// ExitSelectFunctionElement is called when production selectFunctionElement is exited.
+func (s *BaseTsSqlParserListener) ExitSelectFunctionElement(ctx *SelectFunctionElementContext) {}
 
 // EnterFromClause is called when production fromClause is entered.
 func (s *BaseTsSqlParserListener) EnterFromClause(ctx *FromClauseContext) {}
@@ -120,6 +126,26 @@ func (s *BaseTsSqlParserListener) EnterColumnNameExpressionAtom(ctx *ColumnNameE
 // ExitColumnNameExpressionAtom is called when production columnNameExpressionAtom is exited.
 func (s *BaseTsSqlParserListener) ExitColumnNameExpressionAtom(ctx *ColumnNameExpressionAtomContext) {
 }
+
+// EnterFunctionCall is called when production functionCall is entered.
+func (s *BaseTsSqlParserListener) EnterFunctionCall(ctx *FunctionCallContext) {}
+
+// ExitFunctionCall is called when production functionCall is exited.
+func (s *BaseTsSqlParserListener) ExitFunctionCall(ctx *FunctionCallContext) {}
+
+// EnterAggregateWindowedFunction is called when production aggregateWindowedFunction is entered.
+func (s *BaseTsSqlParserListener) EnterAggregateWindowedFunction(ctx *AggregateWindowedFunctionContext) {
+}
+
+// ExitAggregateWindowedFunction is called when production aggregateWindowedFunction is exited.
+func (s *BaseTsSqlParserListener) ExitAggregateWindowedFunction(ctx *AggregateWindowedFunctionContext) {
+}
+
+// EnterFunctionArg is called when production functionArg is entered.
+func (s *BaseTsSqlParserListener) EnterFunctionArg(ctx *FunctionArgContext) {}
+
+// ExitFunctionArg is called when production functionArg is exited.
+func (s *BaseTsSqlParserListener) ExitFunctionArg(ctx *FunctionArgContext) {}
 
 // EnterColumnName is called when production columnName is entered.
 func (s *BaseTsSqlParserListener) EnterColumnName(ctx *ColumnNameContext) {}

@@ -15,7 +15,8 @@ selectElements
     ;
 
 selectElement
-    : fullColumnName (AS? uid)?
+    : fullColumnName (AS? uid)? #selectColumnElement
+    | functionCall (AS? uid)?   #selectFunctionElement
     ;
 
 fromClause
@@ -58,6 +59,20 @@ predicate
 expressionAtom
     : constant                                                    #constantExpressionAtom
     | columnName                                                  #columnNameExpressionAtom
+    ;
+
+functionCall
+    : aggregateWindowedFunction
+    ;
+
+aggregateWindowedFunction
+    :(AVG | MAX | MIN | SUM)
+           '(' aggregator=(ALL | DISTINCT)? functionArg ')'
+         | COUNT '(' (starArg='*' | aggregator=ALL? functionArg ) ')'
+    ;
+
+functionArg
+    : constant | fullColumnName | functionCall | expression
     ;
 
 columnName
