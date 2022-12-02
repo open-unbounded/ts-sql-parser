@@ -191,6 +191,7 @@ func (v *parseTreeVisitor) VisitConstantExpressionAtom(ctx *parser.ConstantExpre
 // -----------------
 
 type LimitClause struct {
+	Valid  bool
 	Offset int
 	Limit  int
 }
@@ -200,11 +201,13 @@ func (v *parseTreeVisitor) VisitLimitClause(ctx *parser.LimitClauseContext) inte
 	limitCtx := ctx.GetLimit()
 	if limitCtx != nil {
 		limitClause.Limit = limitCtx.Accept(v).(int)
+		limitClause.Valid = true
 	}
 
 	offsetCtx := ctx.GetOffset()
 	if offsetCtx != nil {
 		limitClause.Offset = offsetCtx.Accept(v).(int)
+		limitClause.Valid = true
 	}
 
 	return limitClause
