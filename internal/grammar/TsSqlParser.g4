@@ -42,7 +42,7 @@ uid
     ;
 
 tableName
-    : uid
+    : uid (DOT_PROPERTY | DOT_SERVICE | DOT_EVENT)
     ;
 
 expression

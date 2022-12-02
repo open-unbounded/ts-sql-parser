@@ -150,12 +150,23 @@ func (v *parseTreeVisitor) VisitUid(ctx *parser.UidContext) interface{} {
 // -----------------
 
 type TableName struct {
-	TableName string
+	TableName  string
+	SourceType string
 }
 
 func (v *parseTreeVisitor) VisitTableName(ctx *parser.TableNameContext) interface{} {
+	var sourceType string
+	if ctx.DOT_PROPERTY() != nil {
+		sourceType = "PROPERTY"
+	} else if ctx.DOT_SERVICE() != nil {
+		sourceType = "SERVICE"
+	} else if ctx.DOT_EVENT() != nil {
+		sourceType = "EVENT"
+	}
+
 	return TableName{
-		TableName: ctx.Uid().Accept(v).(string),
+		TableName:  ctx.Uid().Accept(v).(string),
+		SourceType: sourceType,
 	}
 }
 
