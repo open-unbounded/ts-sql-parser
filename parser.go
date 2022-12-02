@@ -60,85 +60,10 @@ func (v *parseTreeVisitor) VisitRoot(ctx *parser.RootContext) interface{} {
 	return selectStmts
 }
 
-type (
-	SelectStmt struct {
-		SelectElements SelectElements
-		FromClause     FromClause
-		LimitClause    LimitClause
-		WindowClause   WindowClause
-	}
-
-	SelectElements struct {
-		Star           bool
-		SelectElements []SelectElement
-	}
-	SelectElement struct {
-		FullColumnName string
-		Alias          string
-	}
-)
-
-func (v *parseTreeVisitor) VisitSelectStmt(ctx *parser.SelectStmtContext) interface{} {
-	stmt := SelectStmt{}
-
-	elementsContext := ctx.SelectElements()
-	if elementsContext != nil {
-		stmt.SelectElements = elementsContext.Accept(v).(SelectElements)
-	}
-
-	fromClauseCtx := ctx.FromClause()
-	if fromClauseCtx != nil {
-		stmt.FromClause = fromClauseCtx.Accept(v).(FromClause)
-	}
-
-	limitClauseContext := ctx.LimitClause()
-	if limitClauseContext != nil {
-		stmt.LimitClause = limitClauseContext.Accept(v).(LimitClause)
-	}
-
-	windowClauseContext := ctx.WindowClause()
-	if windowClauseContext != nil {
-		stmt.WindowClause = windowClauseContext.Accept(v).(WindowClause)
-	}
-
-	return stmt
-}
-
-func (v *parseTreeVisitor) VisitSelectElements(ctx *parser.SelectElementsContext) interface{} {
-	selectElementCtxs := ctx.AllSelectElement()
-
-	var selectElements []SelectElement
-	for _, elementCtx := range selectElementCtxs {
-		selectElements = append(selectElements, elementCtx.Accept(v).(SelectElement))
-	}
-
-	return SelectElements{
-		Star:           ctx.STAR() != nil,
-		SelectElements: selectElements,
-	}
-
-}
-
-func (v *parseTreeVisitor) VisitSelectElement(ctx *parser.SelectElementContext) interface{} {
-	element := SelectElement{}
-
-	fullColumnNameContext := ctx.FullColumnName()
-	if fullColumnNameContext != nil {
-		element.FullColumnName = fullColumnNameContext.Accept(v).(string)
-	}
-
-	uidContext := ctx.Uid()
-	if uidContext != nil {
-		element.Alias = uidContext.Accept(v).(string)
-	}
-
-	return element
-}
-
 // -----------------
 
 func (v *parseTreeVisitor) VisitFullColumnName(ctx *parser.FullColumnNameContext) interface{} {
-	return ctx.Uid().Accept(v).(string)
+	return FullColumnName(ctx.Uid().Accept(v).(string))
 }
 
 // -----------------
@@ -243,6 +168,7 @@ type (
 	}
 )
 
+func (p PredicateExpression) isFunctionArg()         {}
 func (p PredicateExpression) isExpression()          {}
 func (c ColumnNameExpressionAtom) isExpressionAtom() {}
 
@@ -260,91 +186,6 @@ func (c ConstantExpressionAtom) isExpressionAtom() {}
 
 func (v *parseTreeVisitor) VisitConstantExpressionAtom(ctx *parser.ConstantExpressionAtomContext) interface{} {
 	return ConstantExpressionAtom{Constant: ctx.Constant().Accept(v).(Constant)}
-}
-
-// -----------------
-
-type (
-	Constant interface {
-		isConstant()
-	}
-	ConstantBool struct {
-		Val bool
-	}
-	ConstantString struct {
-		Val string
-	}
-	ConstantNull struct {
-		Val string
-	}
-	ConstantDecimal struct {
-		Val float64
-	}
-)
-
-func (c ConstantDecimal) isConstant() {}
-func (c ConstantNull) isConstant()    {}
-func (c ConstantBool) isConstant()    {}
-func (c ConstantString) isConstant()  {}
-
-func (v *parseTreeVisitor) VisitConstant(ctx *parser.ConstantContext) interface{} {
-	stringLiteralContext := ctx.StringLiteral()
-	if stringLiteralContext != nil {
-		return ConstantString{Val: stringLiteralContext.Accept(v).(string)}
-	}
-
-	decimalContext := ctx.DecimalLiteral()
-	if decimalContext != nil {
-		var decimal string
-		minusCtx := ctx.MINUS()
-		if minusCtx != nil {
-			decimal = "-"
-		}
-		decimal += decimalContext.GetText()
-
-		return ConstantDecimal{Val: toDecimal(decimal)}
-	}
-
-	booleanLiteralContext := ctx.BooleanLiteral()
-	if booleanLiteralContext != nil {
-		b := booleanLiteralContext.GetText()
-		return ConstantBool{Val: b == "TRUE"}
-	}
-
-	nullLiteralContext := ctx.GetNullLiteral()
-	if nullLiteralContext != nil {
-		notContext := ctx.NOT()
-		var constant string
-		if notContext != nil {
-			constant = notContext.GetText()
-		}
-		if constant != "" {
-			constant += " "
-		}
-		constant += nullLiteralContext.GetText()
-
-		return ConstantNull{Val: constant}
-	}
-
-	return nil
-}
-
-// -----------------
-
-func (v *parseTreeVisitor) VisitStringLiteral(ctx *parser.StringLiteralContext) interface{} {
-	return ctx.GetText()
-}
-
-// -----------------
-
-func (v *parseTreeVisitor) VisitColumnNameExpressionAtom(ctx *parser.ColumnNameExpressionAtomContext) interface{} {
-	return ColumnNameExpressionAtom{
-		ColumnName: ctx.ColumnName().Accept(v).(string),
-	}
-}
-
-func (v *parseTreeVisitor) VisitColumnName(ctx *parser.ColumnNameContext) interface{} {
-	return ctx.Uid().Accept(v).(string)
 }
 
 // -----------------
@@ -455,6 +296,24 @@ func (e ExpressionAtomPredicate) isPredicate()      {}
 
 func (v *parseTreeVisitor) VisitExpressionAtomPredicate(ctx *parser.ExpressionAtomPredicateContext) interface{} {
 	return ExpressionAtomPredicate{ExpressionAtom: ctx.ExpressionAtom().Accept(v).(ExpressionAtom)}
+}
+
+// -----------------
+
+func (v *parseTreeVisitor) VisitStringLiteral(ctx *parser.StringLiteralContext) interface{} {
+	return ctx.GetText()
+}
+
+// -----------------
+
+func (v *parseTreeVisitor) VisitColumnNameExpressionAtom(ctx *parser.ColumnNameExpressionAtomContext) interface{} {
+	return ColumnNameExpressionAtom{
+		ColumnName: ctx.ColumnName().Accept(v).(string),
+	}
+}
+
+func (v *parseTreeVisitor) VisitColumnName(ctx *parser.ColumnNameContext) interface{} {
+	return ctx.Uid().Accept(v).(string)
 }
 
 // -----------------

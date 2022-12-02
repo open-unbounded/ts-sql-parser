@@ -15,8 +15,8 @@ selectElements
     ;
 
 selectElement
-    : fullColumnName (AS? uid)? #selectColumnElement
-    | functionCall (AS? uid)?   #selectFunctionElement
+    : fullColumnName (AS? uid)?                                 #selectColumnElement
+    | functionCall (AS? uid)?                                   #selectFunctionElement
     ;
 
 fromClause
@@ -65,14 +65,14 @@ functionCall
     : aggregateWindowedFunction
     ;
 
+
 aggregateWindowedFunction
-    :(AVG | MAX | MIN | SUM)
-           '(' aggregator=(ALL | DISTINCT)? functionArg ')'
-         | COUNT '(' (starArg='*' | aggregator=ALL? functionArg ) ')'
+    :(AVG | MAX | MIN | SUM | STD | STDDEV) '(' functionArg ')'
+    | COUNT '(' (starArg='*' | functionArg ) ')'
     ;
 
 functionArg
-    : constant | fullColumnName | functionCall | expression
+    : fullColumnName |constant | functionCall 
     ;
 
 columnName

@@ -66,7 +66,7 @@ func tssqlparserParserInit() {
 	}
 	staticData.predictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
-		4, 1, 71, 234, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
+		4, 1, 71, 227, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7,
 		4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7,
 		10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13, 2, 14, 7, 14, 2, 15, 7, 15,
 		2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7, 20, 2,
@@ -82,24 +82,23 @@ func tssqlparserParserInit() {
 		1, 10, 5, 10, 137, 8, 10, 10, 10, 12, 10, 140, 9, 10, 1, 11, 1, 11, 1,
 		11, 1, 11, 1, 11, 1, 11, 1, 11, 5, 11, 149, 8, 11, 10, 11, 12, 11, 152,
 		9, 11, 1, 12, 1, 12, 3, 12, 156, 8, 12, 1, 13, 1, 13, 1, 14, 1, 14, 1,
-		14, 3, 14, 163, 8, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14,
-		3, 14, 172, 8, 14, 1, 14, 3, 14, 175, 8, 14, 1, 14, 3, 14, 178, 8, 14,
-		1, 15, 1, 15, 1, 15, 1, 15, 3, 15, 184, 8, 15, 1, 16, 1, 16, 1, 17, 1,
-		17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 3, 17, 195, 8, 17, 1, 18, 1, 18,
-		1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1,
-		18, 1, 18, 3, 18, 211, 8, 18, 1, 19, 1, 19, 1, 20, 1, 20, 1, 20, 1, 20,
-		1, 20, 1, 20, 3, 20, 221, 8, 20, 1, 20, 3, 20, 224, 8, 20, 1, 21, 1, 21,
-		1, 22, 1, 22, 1, 23, 1, 23, 1, 24, 1, 24, 1, 24, 0, 2, 20, 22, 25, 0, 2,
-		4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
-		42, 44, 46, 48, 0, 7, 2, 0, 56, 58, 69, 69, 1, 0, 5, 7, 2, 0, 33, 33, 35,
-		37, 2, 0, 32, 32, 40, 40, 1, 0, 64, 65, 2, 0, 56, 58, 69, 70, 1, 0, 8,
-		9, 250, 0, 55, 1, 0, 0, 0, 2, 67, 1, 0, 0, 0, 4, 78, 1, 0, 0, 0, 6, 101,
-		1, 0, 0, 0, 8, 103, 1, 0, 0, 0, 10, 109, 1, 0, 0, 0, 12, 117, 1, 0, 0,
-		0, 14, 119, 1, 0, 0, 0, 16, 124, 1, 0, 0, 0, 18, 126, 1, 0, 0, 0, 20, 129,
-		1, 0, 0, 0, 22, 141, 1, 0, 0, 0, 24, 155, 1, 0, 0, 0, 26, 157, 1, 0, 0,
-		0, 28, 177, 1, 0, 0, 0, 30, 183, 1, 0, 0, 0, 32, 185, 1, 0, 0, 0, 34, 194,
-		1, 0, 0, 0, 36, 210, 1, 0, 0, 0, 38, 212, 1, 0, 0, 0, 40, 223, 1, 0, 0,
-		0, 42, 225, 1, 0, 0, 0, 44, 227, 1, 0, 0, 0, 46, 229, 1, 0, 0, 0, 48, 231,
+		14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 1, 14, 3, 14, 169, 8, 14, 1, 14,
+		3, 14, 172, 8, 14, 1, 15, 1, 15, 1, 15, 3, 15, 177, 8, 15, 1, 16, 1, 16,
+		1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 1, 17, 3, 17, 188, 8, 17, 1,
+		18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18, 1, 18,
+		1, 18, 1, 18, 1, 18, 3, 18, 204, 8, 18, 1, 19, 1, 19, 1, 20, 1, 20, 1,
+		20, 1, 20, 1, 20, 1, 20, 3, 20, 214, 8, 20, 1, 20, 3, 20, 217, 8, 20, 1,
+		21, 1, 21, 1, 22, 1, 22, 1, 23, 1, 23, 1, 24, 1, 24, 1, 24, 0, 2, 20, 22,
+		25, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34,
+		36, 38, 40, 42, 44, 46, 48, 0, 6, 2, 0, 56, 58, 69, 69, 1, 0, 5, 7, 2,
+		0, 33, 33, 35, 39, 1, 0, 64, 65, 2, 0, 56, 58, 69, 70, 1, 0, 8, 9, 240,
+		0, 55, 1, 0, 0, 0, 2, 67, 1, 0, 0, 0, 4, 78, 1, 0, 0, 0, 6, 101, 1, 0,
+		0, 0, 8, 103, 1, 0, 0, 0, 10, 109, 1, 0, 0, 0, 12, 117, 1, 0, 0, 0, 14,
+		119, 1, 0, 0, 0, 16, 124, 1, 0, 0, 0, 18, 126, 1, 0, 0, 0, 20, 129, 1,
+		0, 0, 0, 22, 141, 1, 0, 0, 0, 24, 155, 1, 0, 0, 0, 26, 157, 1, 0, 0, 0,
+		28, 171, 1, 0, 0, 0, 30, 176, 1, 0, 0, 0, 32, 178, 1, 0, 0, 0, 34, 187,
+		1, 0, 0, 0, 36, 203, 1, 0, 0, 0, 38, 205, 1, 0, 0, 0, 40, 216, 1, 0, 0,
+		0, 42, 218, 1, 0, 0, 0, 44, 220, 1, 0, 0, 0, 46, 222, 1, 0, 0, 0, 48, 224,
 		1, 0, 0, 0, 50, 52, 3, 2, 1, 0, 51, 53, 5, 54, 0, 0, 52, 51, 1, 0, 0, 0,
 		52, 53, 1, 0, 0, 0, 53, 56, 1, 0, 0, 0, 54, 56, 3, 48, 24, 0, 55, 50, 1,
 		0, 0, 0, 55, 54, 1, 0, 0, 0, 56, 64, 1, 0, 0, 0, 57, 59, 3, 2, 1, 0, 58,
@@ -138,38 +137,35 @@ func tssqlparserParserInit() {
 		0, 0, 151, 23, 1, 0, 0, 0, 152, 150, 1, 0, 0, 0, 153, 156, 3, 40, 20, 0,
 		154, 156, 3, 32, 16, 0, 155, 153, 1, 0, 0, 0, 155, 154, 1, 0, 0, 0, 156,
 		25, 1, 0, 0, 0, 157, 158, 3, 28, 14, 0, 158, 27, 1, 0, 0, 0, 159, 160,
-		7, 2, 0, 0, 160, 162, 5, 51, 0, 0, 161, 163, 7, 3, 0, 0, 162, 161, 1, 0,
-		0, 0, 162, 163, 1, 0, 0, 0, 163, 164, 1, 0, 0, 0, 164, 165, 3, 30, 15,
-		0, 165, 166, 5, 52, 0, 0, 166, 178, 1, 0, 0, 0, 167, 168, 5, 34, 0, 0,
-		168, 174, 5, 51, 0, 0, 169, 175, 5, 25, 0, 0, 170, 172, 5, 32, 0, 0, 171,
-		170, 1, 0, 0, 0, 171, 172, 1, 0, 0, 0, 172, 173, 1, 0, 0, 0, 173, 175,
-		3, 30, 15, 0, 174, 169, 1, 0, 0, 0, 174, 171, 1, 0, 0, 0, 175, 176, 1,
-		0, 0, 0, 176, 178, 5, 52, 0, 0, 177, 159, 1, 0, 0, 0, 177, 167, 1, 0, 0,
-		0, 178, 29, 1, 0, 0, 0, 179, 184, 3, 40, 20, 0, 180, 184, 3, 38, 19, 0,
-		181, 184, 3, 26, 13, 0, 182, 184, 3, 20, 10, 0, 183, 179, 1, 0, 0, 0, 183,
-		180, 1, 0, 0, 0, 183, 181, 1, 0, 0, 0, 183, 182, 1, 0, 0, 0, 184, 31, 1,
-		0, 0, 0, 185, 186, 3, 16, 8, 0, 186, 33, 1, 0, 0, 0, 187, 195, 5, 14, 0,
-		0, 188, 189, 5, 47, 0, 0, 189, 195, 5, 47, 0, 0, 190, 195, 5, 19, 0, 0,
-		191, 195, 5, 17, 0, 0, 192, 193, 5, 46, 0, 0, 193, 195, 5, 46, 0, 0, 194,
-		187, 1, 0, 0, 0, 194, 188, 1, 0, 0, 0, 194, 190, 1, 0, 0, 0, 194, 191,
-		1, 0, 0, 0, 194, 192, 1, 0, 0, 0, 195, 35, 1, 0, 0, 0, 196, 211, 5, 41,
-		0, 0, 197, 211, 5, 42, 0, 0, 198, 211, 5, 43, 0, 0, 199, 200, 5, 43, 0,
-		0, 200, 211, 5, 41, 0, 0, 201, 202, 5, 42, 0, 0, 202, 211, 5, 41, 0, 0,
-		203, 204, 5, 43, 0, 0, 204, 211, 5, 42, 0, 0, 205, 206, 5, 44, 0, 0, 206,
-		211, 5, 41, 0, 0, 207, 208, 5, 43, 0, 0, 208, 209, 5, 41, 0, 0, 209, 211,
-		5, 42, 0, 0, 210, 196, 1, 0, 0, 0, 210, 197, 1, 0, 0, 0, 210, 198, 1, 0,
-		0, 0, 210, 199, 1, 0, 0, 0, 210, 201, 1, 0, 0, 0, 210, 203, 1, 0, 0, 0,
-		210, 205, 1, 0, 0, 0, 210, 207, 1, 0, 0, 0, 211, 37, 1, 0, 0, 0, 212, 213,
-		3, 16, 8, 0, 213, 39, 1, 0, 0, 0, 214, 224, 3, 42, 21, 0, 215, 224, 3,
-		44, 22, 0, 216, 217, 5, 29, 0, 0, 217, 224, 3, 44, 22, 0, 218, 224, 3,
-		46, 23, 0, 219, 221, 5, 24, 0, 0, 220, 219, 1, 0, 0, 0, 220, 221, 1, 0,
-		0, 0, 221, 222, 1, 0, 0, 0, 222, 224, 7, 4, 0, 0, 223, 214, 1, 0, 0, 0,
-		223, 215, 1, 0, 0, 0, 223, 216, 1, 0, 0, 0, 223, 218, 1, 0, 0, 0, 223,
-		220, 1, 0, 0, 0, 224, 41, 1, 0, 0, 0, 225, 226, 5, 66, 0, 0, 226, 43, 1,
-		0, 0, 0, 227, 228, 7, 5, 0, 0, 228, 45, 1, 0, 0, 0, 229, 230, 7, 6, 0,
-		0, 230, 47, 1, 0, 0, 0, 231, 232, 5, 54, 0, 0, 232, 49, 1, 0, 0, 0, 28,
-		52, 55, 59, 62, 64, 71, 74, 78, 84, 89, 92, 96, 99, 101, 107, 113, 138,
-		150, 155, 162, 171, 174, 177, 183, 194, 210, 220, 223,
+		7, 2, 0, 0, 160, 161, 5, 51, 0, 0, 161, 162, 3, 30, 15, 0, 162, 163, 5,
+		52, 0, 0, 163, 172, 1, 0, 0, 0, 164, 165, 5, 34, 0, 0, 165, 168, 5, 51,
+		0, 0, 166, 169, 5, 25, 0, 0, 167, 169, 3, 30, 15, 0, 168, 166, 1, 0, 0,
+		0, 168, 167, 1, 0, 0, 0, 169, 170, 1, 0, 0, 0, 170, 172, 5, 52, 0, 0, 171,
+		159, 1, 0, 0, 0, 171, 164, 1, 0, 0, 0, 172, 29, 1, 0, 0, 0, 173, 177, 3,
+		38, 19, 0, 174, 177, 3, 40, 20, 0, 175, 177, 3, 26, 13, 0, 176, 173, 1,
+		0, 0, 0, 176, 174, 1, 0, 0, 0, 176, 175, 1, 0, 0, 0, 177, 31, 1, 0, 0,
+		0, 178, 179, 3, 16, 8, 0, 179, 33, 1, 0, 0, 0, 180, 188, 5, 14, 0, 0, 181,
+		182, 5, 47, 0, 0, 182, 188, 5, 47, 0, 0, 183, 188, 5, 19, 0, 0, 184, 188,
+		5, 17, 0, 0, 185, 186, 5, 46, 0, 0, 186, 188, 5, 46, 0, 0, 187, 180, 1,
+		0, 0, 0, 187, 181, 1, 0, 0, 0, 187, 183, 1, 0, 0, 0, 187, 184, 1, 0, 0,
+		0, 187, 185, 1, 0, 0, 0, 188, 35, 1, 0, 0, 0, 189, 204, 5, 41, 0, 0, 190,
+		204, 5, 42, 0, 0, 191, 204, 5, 43, 0, 0, 192, 193, 5, 43, 0, 0, 193, 204,
+		5, 41, 0, 0, 194, 195, 5, 42, 0, 0, 195, 204, 5, 41, 0, 0, 196, 197, 5,
+		43, 0, 0, 197, 204, 5, 42, 0, 0, 198, 199, 5, 44, 0, 0, 199, 204, 5, 41,
+		0, 0, 200, 201, 5, 43, 0, 0, 201, 202, 5, 41, 0, 0, 202, 204, 5, 42, 0,
+		0, 203, 189, 1, 0, 0, 0, 203, 190, 1, 0, 0, 0, 203, 191, 1, 0, 0, 0, 203,
+		192, 1, 0, 0, 0, 203, 194, 1, 0, 0, 0, 203, 196, 1, 0, 0, 0, 203, 198,
+		1, 0, 0, 0, 203, 200, 1, 0, 0, 0, 204, 37, 1, 0, 0, 0, 205, 206, 3, 16,
+		8, 0, 206, 39, 1, 0, 0, 0, 207, 217, 3, 42, 21, 0, 208, 217, 3, 44, 22,
+		0, 209, 210, 5, 29, 0, 0, 210, 217, 3, 44, 22, 0, 211, 217, 3, 46, 23,
+		0, 212, 214, 5, 24, 0, 0, 213, 212, 1, 0, 0, 0, 213, 214, 1, 0, 0, 0, 214,
+		215, 1, 0, 0, 0, 215, 217, 7, 3, 0, 0, 216, 207, 1, 0, 0, 0, 216, 208,
+		1, 0, 0, 0, 216, 209, 1, 0, 0, 0, 216, 211, 1, 0, 0, 0, 216, 213, 1, 0,
+		0, 0, 217, 41, 1, 0, 0, 0, 218, 219, 5, 66, 0, 0, 219, 43, 1, 0, 0, 0,
+		220, 221, 7, 4, 0, 0, 221, 45, 1, 0, 0, 0, 222, 223, 7, 5, 0, 0, 223, 47,
+		1, 0, 0, 0, 224, 225, 5, 54, 0, 0, 225, 49, 1, 0, 0, 0, 26, 52, 55, 59,
+		62, 64, 71, 74, 78, 84, 89, 92, 96, 99, 101, 107, 113, 138, 150, 155, 168,
+		171, 176, 187, 203, 213, 216,
 	}
 	deserializer := antlr.NewATNDeserializer(nil)
 	staticData.atn = deserializer.Deserialize(staticData.serializedATN)
@@ -934,7 +930,7 @@ func (p *TsSqlParser) SelectElements() (localctx ISelectElementsContext) {
 			localctx.(*SelectElementsContext).star = _m
 		}
 
-	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserID:
+	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserSTD, TsSqlParserSTDDEV, TsSqlParserID:
 		{
 			p.SetState(77)
 			p.SelectElement()
@@ -1225,7 +1221,7 @@ func (p *TsSqlParser) SelectElement() (localctx ISelectElementContext) {
 
 		}
 
-	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM:
+	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserSTD, TsSqlParserSTDDEV:
 		localctx = NewSelectFunctionElementContext(p, localctx)
 		p.EnterOuterAlt(localctx, 2)
 		{
@@ -3044,14 +3040,8 @@ type IAggregateWindowedFunctionContext interface {
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// GetAggregator returns the aggregator token.
-	GetAggregator() antlr.Token
-
 	// GetStarArg returns the starArg token.
 	GetStarArg() antlr.Token
-
-	// SetAggregator sets the aggregator token.
-	SetAggregator(antlr.Token)
 
 	// SetStarArg sets the starArg token.
 	SetStarArg(antlr.Token)
@@ -3062,9 +3052,8 @@ type IAggregateWindowedFunctionContext interface {
 
 type AggregateWindowedFunctionContext struct {
 	*antlr.BaseParserRuleContext
-	parser     antlr.Parser
-	aggregator antlr.Token
-	starArg    antlr.Token
+	parser  antlr.Parser
+	starArg antlr.Token
 }
 
 func NewEmptyAggregateWindowedFunctionContext() *AggregateWindowedFunctionContext {
@@ -3089,11 +3078,7 @@ func NewAggregateWindowedFunctionContext(parser antlr.Parser, parent antlr.Parse
 
 func (s *AggregateWindowedFunctionContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *AggregateWindowedFunctionContext) GetAggregator() antlr.Token { return s.aggregator }
-
 func (s *AggregateWindowedFunctionContext) GetStarArg() antlr.Token { return s.starArg }
-
-func (s *AggregateWindowedFunctionContext) SetAggregator(v antlr.Token) { s.aggregator = v }
 
 func (s *AggregateWindowedFunctionContext) SetStarArg(v antlr.Token) { s.starArg = v }
 
@@ -3137,12 +3122,12 @@ func (s *AggregateWindowedFunctionContext) SUM() antlr.TerminalNode {
 	return s.GetToken(TsSqlParserSUM, 0)
 }
 
-func (s *AggregateWindowedFunctionContext) ALL() antlr.TerminalNode {
-	return s.GetToken(TsSqlParserALL, 0)
+func (s *AggregateWindowedFunctionContext) STD() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserSTD, 0)
 }
 
-func (s *AggregateWindowedFunctionContext) DISTINCT() antlr.TerminalNode {
-	return s.GetToken(TsSqlParserDISTINCT, 0)
+func (s *AggregateWindowedFunctionContext) STDDEV() antlr.TerminalNode {
+	return s.GetToken(TsSqlParserSTDDEV, 0)
 }
 
 func (s *AggregateWindowedFunctionContext) COUNT() antlr.TerminalNode {
@@ -3207,17 +3192,17 @@ func (p *TsSqlParser) AggregateWindowedFunction() (localctx IAggregateWindowedFu
 		}
 	}()
 
-	p.SetState(177)
+	p.SetState(171)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
-	case TsSqlParserAVG, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM:
+	case TsSqlParserAVG, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserSTD, TsSqlParserSTDDEV:
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(159)
 			_la = p.GetTokenStream().LA(1)
 
-			if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&249108103168) != 0) {
+			if !((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&1073741824000) != 0) {
 				p.GetErrorHandler().RecoverInline(p)
 			} else {
 				p.GetErrorHandler().ReportMatch(p)
@@ -3228,80 +3213,41 @@ func (p *TsSqlParser) AggregateWindowedFunction() (localctx IAggregateWindowedFu
 			p.SetState(160)
 			p.Match(TsSqlParserLR_BRACKET)
 		}
-		p.SetState(162)
-		p.GetErrorHandler().Sync(p)
-		_la = p.GetTokenStream().LA(1)
-
-		if _la == TsSqlParserALL || _la == TsSqlParserDISTINCT {
-			{
-				p.SetState(161)
-
-				var _lt = p.GetTokenStream().LT(1)
-
-				localctx.(*AggregateWindowedFunctionContext).aggregator = _lt
-
-				_la = p.GetTokenStream().LA(1)
-
-				if !(_la == TsSqlParserALL || _la == TsSqlParserDISTINCT) {
-					var _ri = p.GetErrorHandler().RecoverInline(p)
-
-					localctx.(*AggregateWindowedFunctionContext).aggregator = _ri
-				} else {
-					p.GetErrorHandler().ReportMatch(p)
-					p.Consume()
-				}
-			}
-
-		}
 		{
-			p.SetState(164)
+			p.SetState(161)
 			p.FunctionArg()
 		}
 		{
-			p.SetState(165)
+			p.SetState(162)
 			p.Match(TsSqlParserRR_BRACKET)
 		}
 
 	case TsSqlParserCOUNT:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(167)
+			p.SetState(164)
 			p.Match(TsSqlParserCOUNT)
 		}
 		{
-			p.SetState(168)
+			p.SetState(165)
 			p.Match(TsSqlParserLR_BRACKET)
 		}
-		p.SetState(174)
+		p.SetState(168)
 		p.GetErrorHandler().Sync(p)
 
 		switch p.GetTokenStream().LA(1) {
 		case TsSqlParserSTAR:
 			{
-				p.SetState(169)
+				p.SetState(166)
 
 				var _m = p.Match(TsSqlParserSTAR)
 
 				localctx.(*AggregateWindowedFunctionContext).starArg = _m
 			}
 
-		case TsSqlParserFALSE, TsSqlParserTRUE, TsSqlParserNOT, TsSqlParserMINUS, TsSqlParserALL, TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserZERO_DECIMAL, TsSqlParserONE_DECIMAL, TsSqlParserTWO_DECIMAL, TsSqlParserID, TsSqlParserNULL_LITERAL, TsSqlParserNULL_SPEC_LITERAL, TsSqlParserSTRING_LITERAL, TsSqlParserDECIMAL_LITERAL, TsSqlParserREAL_LITERAL:
-			p.SetState(171)
-			p.GetErrorHandler().Sync(p)
-			_la = p.GetTokenStream().LA(1)
-
-			if _la == TsSqlParserALL {
-				{
-					p.SetState(170)
-
-					var _m = p.Match(TsSqlParserALL)
-
-					localctx.(*AggregateWindowedFunctionContext).aggregator = _m
-				}
-
-			}
+		case TsSqlParserFALSE, TsSqlParserTRUE, TsSqlParserNOT, TsSqlParserMINUS, TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserSTD, TsSqlParserSTDDEV, TsSqlParserZERO_DECIMAL, TsSqlParserONE_DECIMAL, TsSqlParserTWO_DECIMAL, TsSqlParserID, TsSqlParserNULL_LITERAL, TsSqlParserNULL_SPEC_LITERAL, TsSqlParserSTRING_LITERAL, TsSqlParserDECIMAL_LITERAL, TsSqlParserREAL_LITERAL:
 			{
-				p.SetState(173)
+				p.SetState(167)
 				p.FunctionArg()
 			}
 
@@ -3309,7 +3255,7 @@ func (p *TsSqlParser) AggregateWindowedFunction() (localctx IAggregateWindowedFu
 			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 		}
 		{
-			p.SetState(176)
+			p.SetState(170)
 			p.Match(TsSqlParserRR_BRACKET)
 		}
 
@@ -3358,22 +3304,6 @@ func NewFunctionArgContext(parser antlr.Parser, parent antlr.ParserRuleContext, 
 
 func (s *FunctionArgContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *FunctionArgContext) Constant() IConstantContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IConstantContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IConstantContext)
-}
-
 func (s *FunctionArgContext) FullColumnName() IFullColumnNameContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
@@ -3390,6 +3320,22 @@ func (s *FunctionArgContext) FullColumnName() IFullColumnNameContext {
 	return t.(IFullColumnNameContext)
 }
 
+func (s *FunctionArgContext) Constant() IConstantContext {
+	var t antlr.RuleContext
+	for _, ctx := range s.GetChildren() {
+		if _, ok := ctx.(IConstantContext); ok {
+			t = ctx.(antlr.RuleContext)
+			break
+		}
+	}
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IConstantContext)
+}
+
 func (s *FunctionArgContext) FunctionCall() IFunctionCallContext {
 	var t antlr.RuleContext
 	for _, ctx := range s.GetChildren() {
@@ -3404,22 +3350,6 @@ func (s *FunctionArgContext) FunctionCall() IFunctionCallContext {
 	}
 
 	return t.(IFunctionCallContext)
-}
-
-func (s *FunctionArgContext) Expression() IExpressionContext {
-	var t antlr.RuleContext
-	for _, ctx := range s.GetChildren() {
-		if _, ok := ctx.(IExpressionContext); ok {
-			t = ctx.(antlr.RuleContext)
-			break
-		}
-	}
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IExpressionContext)
 }
 
 func (s *FunctionArgContext) GetRuleContext() antlr.RuleContext {
@@ -3475,37 +3405,33 @@ func (p *TsSqlParser) FunctionArg() (localctx IFunctionArgContext) {
 		}
 	}()
 
-	p.SetState(183)
+	p.SetState(176)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 23, p.GetParserRuleContext()) {
-	case 1:
+
+	switch p.GetTokenStream().LA(1) {
+	case TsSqlParserID:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(179)
-			p.Constant()
-		}
-
-	case 2:
-		p.EnterOuterAlt(localctx, 2)
-		{
-			p.SetState(180)
+			p.SetState(173)
 			p.FullColumnName()
 		}
 
-	case 3:
+	case TsSqlParserFALSE, TsSqlParserTRUE, TsSqlParserNOT, TsSqlParserMINUS, TsSqlParserZERO_DECIMAL, TsSqlParserONE_DECIMAL, TsSqlParserTWO_DECIMAL, TsSqlParserNULL_LITERAL, TsSqlParserNULL_SPEC_LITERAL, TsSqlParserSTRING_LITERAL, TsSqlParserDECIMAL_LITERAL, TsSqlParserREAL_LITERAL:
+		p.EnterOuterAlt(localctx, 2)
+		{
+			p.SetState(174)
+			p.Constant()
+		}
+
+	case TsSqlParserAVG, TsSqlParserCOUNT, TsSqlParserMAX, TsSqlParserMIN, TsSqlParserSUM, TsSqlParserSTD, TsSqlParserSTDDEV:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(181)
+			p.SetState(175)
 			p.FunctionCall()
 		}
 
-	case 4:
-		p.EnterOuterAlt(localctx, 4)
-		{
-			p.SetState(182)
-			p.expression(0)
-		}
-
+	default:
+		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 	}
 
 	return localctx
@@ -3620,7 +3546,7 @@ func (p *TsSqlParser) ColumnName() (localctx IColumnNameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(185)
+		p.SetState(178)
 		p.Uid()
 	}
 
@@ -3746,50 +3672,50 @@ func (p *TsSqlParser) LogicalOperator() (localctx ILogicalOperatorContext) {
 		}
 	}()
 
-	p.SetState(194)
+	p.SetState(187)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case TsSqlParserAND:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(187)
+			p.SetState(180)
 			p.Match(TsSqlParserAND)
 		}
 
 	case TsSqlParserBIT_AND_OP:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(188)
+			p.SetState(181)
 			p.Match(TsSqlParserBIT_AND_OP)
 		}
 		{
-			p.SetState(189)
+			p.SetState(182)
 			p.Match(TsSqlParserBIT_AND_OP)
 		}
 
 	case TsSqlParserXOR:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(190)
+			p.SetState(183)
 			p.Match(TsSqlParserXOR)
 		}
 
 	case TsSqlParserOR:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(191)
+			p.SetState(184)
 			p.Match(TsSqlParserOR)
 		}
 
 	case TsSqlParserBIT_OR_OP:
 		p.EnterOuterAlt(localctx, 5)
 		{
-			p.SetState(192)
+			p.SetState(185)
 			p.Match(TsSqlParserBIT_OR_OP)
 		}
 		{
-			p.SetState(193)
+			p.SetState(186)
 			p.Match(TsSqlParserBIT_OR_OP)
 		}
 
@@ -3907,86 +3833,86 @@ func (p *TsSqlParser) ComparisonOperator() (localctx IComparisonOperatorContext)
 		}
 	}()
 
-	p.SetState(210)
+	p.SetState(203)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 25, p.GetParserRuleContext()) {
+	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 23, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(196)
+			p.SetState(189)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 2:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(197)
+			p.SetState(190)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 
 	case 3:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(198)
+			p.SetState(191)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 
 	case 4:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(199)
+			p.SetState(192)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 		{
-			p.SetState(200)
+			p.SetState(193)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 5:
 		p.EnterOuterAlt(localctx, 5)
 		{
-			p.SetState(201)
+			p.SetState(194)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 		{
-			p.SetState(202)
+			p.SetState(195)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 6:
 		p.EnterOuterAlt(localctx, 6)
 		{
-			p.SetState(203)
+			p.SetState(196)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 		{
-			p.SetState(204)
+			p.SetState(197)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 
 	case 7:
 		p.EnterOuterAlt(localctx, 7)
 		{
-			p.SetState(205)
+			p.SetState(198)
 			p.Match(TsSqlParserEXCLAMATION_SYMBOL)
 		}
 		{
-			p.SetState(206)
+			p.SetState(199)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 
 	case 8:
 		p.EnterOuterAlt(localctx, 8)
 		{
-			p.SetState(207)
+			p.SetState(200)
 			p.Match(TsSqlParserLESS_SYMBOL)
 		}
 		{
-			p.SetState(208)
+			p.SetState(201)
 			p.Match(TsSqlParserEQUAL_SYMBOL)
 		}
 		{
-			p.SetState(209)
+			p.SetState(202)
 			p.Match(TsSqlParserGREATER_SYMBOL)
 		}
 
@@ -4104,7 +4030,7 @@ func (p *TsSqlParser) FullColumnName() (localctx IFullColumnNameContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(212)
+		p.SetState(205)
 		p.Uid()
 	}
 
@@ -4278,57 +4204,57 @@ func (p *TsSqlParser) Constant() (localctx IConstantContext) {
 		}
 	}()
 
-	p.SetState(223)
+	p.SetState(216)
 	p.GetErrorHandler().Sync(p)
 
 	switch p.GetTokenStream().LA(1) {
 	case TsSqlParserSTRING_LITERAL:
 		p.EnterOuterAlt(localctx, 1)
 		{
-			p.SetState(214)
+			p.SetState(207)
 			p.StringLiteral()
 		}
 
 	case TsSqlParserZERO_DECIMAL, TsSqlParserONE_DECIMAL, TsSqlParserTWO_DECIMAL, TsSqlParserDECIMAL_LITERAL, TsSqlParserREAL_LITERAL:
 		p.EnterOuterAlt(localctx, 2)
 		{
-			p.SetState(215)
+			p.SetState(208)
 			p.DecimalLiteral()
 		}
 
 	case TsSqlParserMINUS:
 		p.EnterOuterAlt(localctx, 3)
 		{
-			p.SetState(216)
+			p.SetState(209)
 			p.Match(TsSqlParserMINUS)
 		}
 		{
-			p.SetState(217)
+			p.SetState(210)
 			p.DecimalLiteral()
 		}
 
 	case TsSqlParserFALSE, TsSqlParserTRUE:
 		p.EnterOuterAlt(localctx, 4)
 		{
-			p.SetState(218)
+			p.SetState(211)
 			p.BooleanLiteral()
 		}
 
 	case TsSqlParserNOT, TsSqlParserNULL_LITERAL, TsSqlParserNULL_SPEC_LITERAL:
 		p.EnterOuterAlt(localctx, 5)
-		p.SetState(220)
+		p.SetState(213)
 		p.GetErrorHandler().Sync(p)
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == TsSqlParserNOT {
 			{
-				p.SetState(219)
+				p.SetState(212)
 				p.Match(TsSqlParserNOT)
 			}
 
 		}
 		{
-			p.SetState(222)
+			p.SetState(215)
 
 			var _lt = p.GetTokenStream().LT(1)
 
@@ -4450,7 +4376,7 @@ func (p *TsSqlParser) StringLiteral() (localctx IStringLiteralContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(225)
+		p.SetState(218)
 		p.Match(TsSqlParserSTRING_LITERAL)
 	}
 
@@ -4571,7 +4497,7 @@ func (p *TsSqlParser) DecimalLiteral() (localctx IDecimalLiteralContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(227)
+		p.SetState(220)
 		_la = p.GetTokenStream().LA(1)
 
 		if !((int64((_la-56)) & ^0x3f) == 0 && ((int64(1)<<(_la-56))&24583) != 0) {
@@ -4687,7 +4613,7 @@ func (p *TsSqlParser) BooleanLiteral() (localctx IBooleanLiteralContext) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(229)
+		p.SetState(222)
 		_la = p.GetTokenStream().LA(1)
 
 		if !(_la == TsSqlParserFALSE || _la == TsSqlParserTRUE) {
@@ -4798,7 +4724,7 @@ func (p *TsSqlParser) EmptyStatement_() (localctx IEmptyStatement_Context) {
 
 	p.EnterOuterAlt(localctx, 1)
 	{
-		p.SetState(231)
+		p.SetState(224)
 		p.Match(TsSqlParserSEMI)
 	}
 
