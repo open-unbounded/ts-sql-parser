@@ -567,7 +567,7 @@ func TestParse(t *testing.T) {
 	})
 
 	t.Run("3", func(t *testing.T) {
-		result, err := Parse("select count(a) b, sum(C) AS D, c from a.service where x>1 and m<1 limit 2 INTERVAL(1s)")
+		result, err := Parse("select count(a) b, sum(C) AS D, c from a.service where x>1 and m<1 limit 2 INTERVAL(1a)")
 		assert.NoError(t, err)
 		assert.EqualValues(t, []SelectStmt{
 			{
@@ -617,7 +617,7 @@ func TestParse(t *testing.T) {
 					Limit: 2,
 					Valid: true,
 				},
-				WindowClause: WindowClause{Duration: "1s"},
+				WindowClause: WindowClause{Duration: "1a"},
 			},
 		}, result)
 	})
