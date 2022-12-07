@@ -71,7 +71,7 @@ BIT_OR_OP:                           '|';
 BIT_AND_OP:                          '&';
 BIT_XOR_OP:                          '^';
 
-TIME_INTERVAL:                       DEC_DIGIT+ ('S'|'M'|'H'|'D');
+TIME_INTERVAL:                       DEC_DIGIT+ ('A'|'S'|'M'|'H'|'D');
 
 DOT:                                 '.';
 LR_BRACKET:                          '(';
